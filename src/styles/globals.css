@@ -270,7 +270,7 @@
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   color: #fff !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'IBM Plex Mono', monospace !important;
   font-size: 11px !important;
   text-transform: uppercase;
   letter-spacing: 0.12em;

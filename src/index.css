@@ -2,9 +2,9 @@
 @import "./styles/globals.css";
 
 @theme {
-  --font-display: 'Playfair Display', serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-sans: 'DM Sans', sans-serif;
+  --font-display: 'Marcellus', serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-sans: 'Inter', sans-serif;
 }
 
 @layer base {

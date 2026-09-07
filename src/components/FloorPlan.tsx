@@ -126,7 +126,7 @@ export default function FloorPlan({ floorPlan, currentSceneId, onNavigate, onClo
                         textAnchor="middle"
                         dominantBaseline="middle"
                         fill={active ? 'white' : 'rgba(255,255,255,0.5)'}
-                        fontFamily="'JetBrains Mono', monospace"
+                        fontFamily="'IBM Plex Mono', monospace"
                         fontSize={fs}
                         fontWeight={active ? '600' : '400'}
                         letterSpacing="0.02em"
