@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@import "./styles/globals.css";
+
+@theme {
+  --font-display: 'Playfair Display', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'DM Sans', sans-serif;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background-color: #000;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+}

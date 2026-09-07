@@ -1,0 +1,10 @@
+Panoramas 360° reales de Poly Haven (https://polyhaven.com — licencia CC0, uso comercial libre).
+Descargados vía inmersa-demo/scripts/fetch-real-panoramas.mjs y convertidos a JPG (auto-exposición + ACES).
+salon <- kiara_interior
+cocina <- warm_reception_dinner
+pasillo <- large_corridor
+dormitorio-principal <- relax_inn_seaview_suite
+dormitorio-2 <- hotel_room
+bano <- modern_bathroom
+patio <- sundowner_deck
+cochera <- garage
