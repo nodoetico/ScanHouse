@@ -22,13 +22,12 @@ interface TourProps {
   setShowLeadForm: (show: boolean) => void;
 }
 
-function createTooltip(hs: Hotspot): () => HTMLElement {
-  return () => {
-    const el = document.createElement('div');
-    el.className = 'pnlm-tooltip';
-    const isNav = hs.type === 'navigation';
-    el.textContent = isNav ? `${hs.name} →` : hs.name;
-    return el;
+function createTooltip(hs: Hotspot): (el: HTMLElement) => void {
+  return (el) => {
+    const label = document.createElement('div');
+    label.className = 'pnlm-tooltip';
+    label.textContent = hs.type === 'navigation' ? `${hs.name} →` : hs.name;
+    el.appendChild(label);
   };
 }
 

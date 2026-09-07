@@ -203,7 +203,7 @@
   background: #000;
 }
 
-/* Base hotspot - shared styles */
+/* Base hotspot - shared styles (static, no pulse/scale animation) */
 .pnlm-hotspot-base,
 .pnlm-hotspot,
 .pnlm-hotspot-nav,
@@ -214,12 +214,10 @@
   border-radius: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
-  transition: all 0.3s ease;
+  transition: box-shadow 0.3s ease;
   box-shadow:
-    0 0 0 0 rgba(0, 0, 0, 0.5),
     0 0 8px 2px rgba(0, 0, 0, 0.4),
     inset 0 0 0 2px rgba(255, 255, 255, 0.9);
-  animation: hotspot-pulse 3s ease-in-out infinite;
 }
 
 /* Navigation hotspot - gold/amber accent, more prominent */
@@ -236,32 +234,16 @@
   opacity: 0.95;
 }
 
-@keyframes hotspot-pulse {
-  0%, 100% {
-    box-shadow:
-      0 0 0 0 rgba(0, 0, 0, 0.5),
-      0 0 8px 2px rgba(0, 0, 0, 0.4),
-      inset 0 0 0 2px rgba(255, 255, 255, 0.9),
-      0 0 0 0 rgba(255, 215, 106, 0);
-  }
-  50% {
-    box-shadow:
-      0 0 0 0 rgba(0, 0, 0, 0.5),
-      0 0 12px 4px rgba(0, 0, 0, 0.5),
-      inset 0 0 0 2px rgba(255, 255, 255, 0.9),
-      0 0 0 6px rgba(255, 215, 106, 0.25);
-  }
-}
-
 .pnlm-hotspot-nav:hover,
 .pnlm-hotspot-info:hover {
-  transform: translate(-50%, -50%) scale(1.35) !important;
-  animation-play-state: paused;
+  box-shadow:
+    0 0 16px 6px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 2px rgba(255, 255, 255, 1),
+    0 0 0 6px rgba(255, 215, 106, 0.25);
 }
 
 .pnlm-hotspot-nav:hover {
   box-shadow:
-    0 0 0 0 rgba(0, 0, 0, 0.5),
     0 0 16px 6px rgba(0, 0, 0, 0.5),
     inset 0 0 0 2px rgba(255, 255, 255, 1),
     0 0 0 8px rgba(255, 215, 106, 0.4) !important;
@@ -269,13 +251,21 @@
 
 .pnlm-hotspot-info:hover {
   box-shadow:
-    0 0 0 0 rgba(0, 0, 0, 0.5),
     0 0 16px 6px rgba(0, 0, 0, 0.5),
     inset 0 0 0 2px rgba(255, 255, 255, 1),
     0 0 0 8px rgba(255, 255, 255, 0.3) !important;
 }
 
+/* Floating label above the hotspot - never moves or resizes the hotspot */
 .pnlm-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 12px);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
   background: rgba(0, 0, 0, 0.85) !important;
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
@@ -286,21 +276,12 @@
   letter-spacing: 0.12em;
   padding: 8px 14px !important;
   border-radius: 6px !important;
-  white-space: nowrap;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+  z-index: 20;
 }
 
-.pnlm-tooltip-above .pnlm-tooltip::before {
-  border-top-color: rgba(255, 255, 255, 0.2) !important;
-}
-.pnlm-tooltip-below .pnlm-tooltip::before {
-  border-bottom-color: rgba(255, 255, 255, 0.2) !important;
-}
-.pnlm-tooltip-left .pnlm-tooltip::before {
-  border-left-color: rgba(255, 255, 255, 0.2) !important;
-}
-.pnlm-tooltip-right .pnlm-tooltip::before {
-  border-right-color: rgba(255, 255, 255, 0.2) !important;
+.pnlm-hotspot-base:hover > .pnlm-tooltip {
+  opacity: 1;
 }
 
 .pnlm-controls {

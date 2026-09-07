@@ -10,7 +10,7 @@ export interface HotSpot {
   sceneId?: string;
   id?: string;
   clickHandlerFunc?: (event: MouseEvent | TouchEvent) => void;
-  createTooltipFunc?: () => HTMLElement;
+  createTooltipFunc?: (element: HTMLElement, args?: any) => void;
   createTooltipArgs?: any;
   div?: HTMLDivElement;
   cssClass?: string;
