@@ -50,8 +50,6 @@ function buildSceneConfig(scene: Scene, onHotspotClick: (hs: Hotspot) => void, s
     ...shared,
     panorama: scene.panorama,
     autoLoad: true,
-    autoRotate: -0.4,
-    autoRotateInactivityDelay: 10000,
     hfov: scene.rotation.hfov,
     hotSpots: scene.hotspots.map(hs => ({
       pitch: hs.pitch,

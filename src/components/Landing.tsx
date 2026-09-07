@@ -8,17 +8,14 @@ interface LandingProps {
 
 export default function Landing({ onEnter, branding }: LandingProps) {
   const [phase, setPhase] = useState<'initial' | 'reveal' | 'cta'>('initial');
-  const [showCursor, setShowCursor] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer1 = setTimeout(() => setPhase('reveal'), 1500);
     const timer2 = setTimeout(() => setPhase('cta'), 4000);
-    const timer3 = setTimeout(() => setShowCursor(true), 4200);
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
-      clearTimeout(timer3);
     };
   }, []);
 
@@ -109,25 +106,6 @@ export default function Landing({ onEnter, branding }: LandingProps) {
             Presiona ENTER o haz clic para comenzar
           </p>
         </div>
-      </div>
-
-      <div
-        className={`fixed bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 transition-all duration-1000 ${
-          phase !== 'cta' ? 'opacity-0 translate-y-10' : 'opacity-100 translate-y-0'
-        }`}
-        aria-hidden="true"
-      >
-        <div className="w-px h-20 bg-gradient-to-b from-white/20 to-transparent" />
-        <div
-          className={`w-6 h-6 border border-white/30 rounded-full flex items-center justify-center animate-bounce ${
-            showCursor ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <svg className="w-3 h-3 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-        </div>
-        <p className="font-mono text-xs uppercase tracking-widest text-white/30">SCROLL</p>
       </div>
     </div>
   );
