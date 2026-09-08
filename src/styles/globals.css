@@ -305,6 +305,20 @@
   opacity: 1;
 }
 
+/* Neutralize Pannellum's default tooltip styles (it hides spans inside .pnlm-tooltip) */
+.pnlm-tooltip span {
+  visibility: visible !important;
+  position: static !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+  cursor: inherit !important;
+  background: transparent !important;
+  color: inherit !important;
+  border-radius: 0 !important;
+}
+
 .pnlm-controls {
   display: none;
 }
