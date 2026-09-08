@@ -38,18 +38,18 @@ export default function TourControls({
 
   return (
     <div className="fixed inset-0 pointer-events-none z-30" aria-hidden="true">
-      <div className="fixed top-6 left-6 right-6 flex items-start justify-between pointer-events-auto">
-        <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-black/35 backdrop-blur-md border border-white/20 shadow-lg shadow-black/20">
-          <span className="font-display text-xl font-medium text-white">
+      <div className="fixed top-3 left-3 right-3 sm:top-6 sm:left-6 sm:right-6 flex items-start justify-between gap-3 pointer-events-auto">
+        <div className="flex items-center gap-3 px-3 py-2 sm:px-4 rounded-xl bg-black/35 backdrop-blur-md border border-white/20 shadow-lg shadow-black/20">
+          <span className="font-display text-lg sm:text-xl font-medium text-white">
             {property.branding.name}
           </span>
           <span className="hidden md:block w-px h-6 bg-white/20" />
-          <span className="font-mono text-xs uppercase tracking-widest text-white/70">
+          <span className="hidden md:inline font-mono text-xs uppercase tracking-widest text-white/70">
             {currentScene.name}
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <ControlButton
             onClick={() => setShowInfo(!showInfo)}
             active={showInfo}
@@ -96,8 +96,8 @@ export default function TourControls({
         </div>
       </div>
 
-      <div className="fixed bottom-6 left-6 right-6 flex items-center justify-between pointer-events-auto">
-        <div className="flex items-center gap-4">
+      <div className="fixed bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 flex items-center justify-between gap-3 pointer-events-auto">
+        <div className="flex items-center gap-2 sm:gap-4">
           <NavButton
             onClick={onPrevScene}
             disabled={isFirst}
@@ -109,14 +109,14 @@ export default function TourControls({
             </svg>
           </NavButton>
 
-          <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-black/35 backdrop-blur-md border border-white/20">
+          <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 py-2 sm:px-3 sm:py-2.5 rounded-xl bg-black/35 backdrop-blur-md border border-white/20">
             {property.scenes.map((scene, index) => (
               <button
                 key={scene.id}
                 onClick={() => onSceneSelect(scene.id)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
                   index === currentSceneIndex
-                    ? 'bg-white w-6'
+                    ? 'bg-white w-4 sm:w-6'
                     : 'bg-white/45 hover:bg-white/70'
                 }`}
                 aria-label={`Ir a ${scene.name}`}
@@ -137,7 +137,7 @@ export default function TourControls({
           </NavButton>
         </div>
 
-        <div className="px-3 py-2 rounded-xl bg-black/35 backdrop-blur-md border border-white/20 font-mono text-xs uppercase tracking-widest text-white/80">
+        <div className="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-black/35 backdrop-blur-md border border-white/20 font-mono text-[10px] sm:text-xs uppercase tracking-widest text-white/80">
           {String(currentSceneIndex + 1).padStart(2, '0')} / {String(totalScenes).padStart(2, '0')}
         </div>
       </div>
@@ -156,7 +156,7 @@ function ControlButton({
     <button
       onClick={onClick}
       className={`
-        w-12 h-12 rounded-xl flex items-center justify-center text-white
+        w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-white
         bg-black/35 backdrop-blur-md border border-white/20
         shadow-lg shadow-black/20
         hover:bg-black/55 hover:border-white/40
@@ -182,7 +182,7 @@ function NavButton({
       onClick={onClick}
       disabled={disabled}
       className={`
-        w-14 h-14 rounded-xl flex items-center justify-center text-white
+        w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center text-white
         bg-black/35 backdrop-blur-md border border-white/20
         shadow-lg shadow-black/20
         hover:bg-black/55 hover:border-white/40

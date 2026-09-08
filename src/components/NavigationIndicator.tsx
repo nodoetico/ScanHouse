@@ -8,7 +8,7 @@ interface NavigationIndicatorProps {
 export default function NavigationIndicator({ currentScene, currentIndex }: NavigationIndicatorProps) {
   return (
     <div
-      className="fixed top-20 left-6 z-20 pointer-events-none animate-fade-in-up"
+      className="fixed top-16 sm:top-20 left-3 sm:left-6 z-20 pointer-events-none animate-fade-in-up"
       aria-live="polite"
       aria-atomic="true"
     >
