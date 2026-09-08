@@ -43,7 +43,7 @@ const luminance = async () => {
 try {
   const resp = await page.goto(BASE, { waitUntil: 'networkidle2', timeout: 30000 });
   report(resp.ok() || resp.status() === 304, 'Landing carga', `status=${resp.status()}`);
-  report((await page.title()).includes('INMERSA'), 'Title de la landing');
+  report((await page.title()).includes('ScanHouse'), 'Title de la landing');
 
   const enterBtn = await page.$('button[aria-label*="Comenzar recorrido"]');
   report(enterBtn !== null, 'Botón ENTRAR A LA PROPIEDAD presente');

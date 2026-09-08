@@ -1,7 +1,7 @@
 import type { Property, Branding } from '../types/property';
 
 export const branding: Branding = {
-  name: 'INMERSA',
+  name: 'ScanHouse',
   tagline: 'UNA PROPIEDAD NO SE MUESTRA. SE EXPERIMENTA.',
   logo: '',
   primaryColor: '#ffffff',
