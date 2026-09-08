@@ -40,13 +40,13 @@
 
 @keyframes goldTwinkle {
   0%, 100% {
-    box-shadow: 0 0 12px rgba(255, 215, 106, 0.15), 0 0 24px rgba(255, 215, 106, 0.06);
+    box-shadow: 0 0 6px rgba(255, 215, 106, 0.15), 0 0 12px rgba(255, 215, 106, 0.06);
   }
   33% {
-    box-shadow: 0 0 18px rgba(255, 215, 106, 0.3), 0 0 36px rgba(255, 215, 106, 0.1);
+    box-shadow: 0 0 8px rgba(255, 215, 106, 0.3), 0 0 16px rgba(255, 215, 106, 0.1);
   }
   66% {
-    box-shadow: 0 0 10px rgba(255, 215, 106, 0.12), 0 0 20px rgba(255, 215, 106, 0.04);
+    box-shadow: 0 0 5px rgba(255, 215, 106, 0.12), 0 0 10px rgba(255, 215, 106, 0.04);
   }
 }
 
@@ -355,8 +355,8 @@
 .blob-wrap::before {
   content: '';
   position: absolute;
-  inset: 0;
-  border-radius: 999px;
+  inset: 6%;
+  border-radius: 50%;
   border: 1px solid rgba(255, 215, 106, 0.18);
   animation: goldTwinkle 3s ease-in-out infinite;
   pointer-events: none;
