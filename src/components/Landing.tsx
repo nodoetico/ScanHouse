@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import type { Branding } from '../types/property';
+import ParticleBlobButton from './ParticleBlobButton';
 
 interface LandingProps {
   onEnter: () => void;
@@ -81,26 +82,7 @@ export default function Landing({ onEnter, branding }: LandingProps) {
             {branding.name}
           </h2>
 
-          <button
-            onClick={onEnter}
-            onKeyDown={(e) => e.key === 'Enter' && onEnter()}
-            className="group btn-primary inline-flex items-center gap-4 px-10 py-4 min-w-[280px] justify-center focus-visible"
-            aria-label="Entrar a la propiedad - Comenzar recorrido inmersivo"
-            tabIndex={0}
-          >
-            <span className="font-mono text-sm md:text-base uppercase tracking-widest">
-              ENTRAR A LA PROPIEDAD
-            </span>
-            <svg
-              className="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </button>
+          <ParticleBlobButton onClick={onEnter} label="ENTRAR A LA PROPIEDAD" />
 
           <p className="mt-8 font-mono text-xs uppercase tracking-widest text-white/30">
             Presiona ENTER o haz clic para comenzar
