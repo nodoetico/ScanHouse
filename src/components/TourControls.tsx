@@ -8,14 +8,13 @@ interface TourControlsProps {
   onNextScene: () => void;
   onPrevScene: () => void;
   onSceneSelect: (sceneId: string) => void;
+  onRequestVisit: () => void;
   showInfo: boolean;
   setShowInfo: (show: boolean) => void;
   showAssistant: boolean;
   setShowAssistant: (show: boolean) => void;
   showFloorPlan: boolean;
   setShowFloorPlan: (show: boolean) => void;
-  showLeadForm: boolean;
-  setShowLeadForm: (show: boolean) => void;
 }
 
 export default function TourControls({
@@ -26,14 +25,13 @@ export default function TourControls({
   onNextScene,
   onPrevScene,
   onSceneSelect,
+  onRequestVisit,
   showInfo,
   setShowInfo,
   showAssistant,
   setShowAssistant,
   showFloorPlan,
   setShowFloorPlan,
-  showLeadForm,
-  setShowLeadForm,
 }: TourControlsProps) {
   const isFirst = currentSceneIndex === 0;
   const isLast = currentSceneIndex === totalScenes - 1;
@@ -86,10 +84,8 @@ export default function TourControls({
           </ControlButton>
 
           <ControlButton
-            onClick={() => setShowLeadForm(!showLeadForm)}
-            active={showLeadForm}
-            aria-label={showLeadForm ? 'Cerrar formulario' : 'Me interesa esta propiedad'}
-            aria-pressed={showLeadForm}
+            onClick={onRequestVisit}
+            aria-label="Me interesa esta propiedad - Solicitar visita"
             className="bg-white/10 border-white/20 hover:bg-white/20"
           >
             <span className="font-mono text-xs uppercase tracking-wider hidden sm:inline">ME INTERESA</span>

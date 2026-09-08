@@ -12,14 +12,13 @@ interface TourProps {
   onNavigate: (sceneId: string) => void;
   onNextScene: () => void;
   onPrevScene: () => void;
+  onRequestVisit: () => void;
   showInfo: boolean;
   setShowInfo: (show: boolean) => void;
   showAssistant: boolean;
   setShowAssistant: (show: boolean) => void;
   showFloorPlan: boolean;
   setShowFloorPlan: (show: boolean) => void;
-  showLeadForm: boolean;
-  setShowLeadForm: (show: boolean) => void;
 }
 
 function createTooltip(hs: Hotspot): (el: HTMLElement) => void {
@@ -69,14 +68,13 @@ export default function Tour({
   onNavigate,
   onNextScene,
   onPrevScene,
+  onRequestVisit,
   showInfo,
   setShowInfo,
   showAssistant,
   setShowAssistant,
   showFloorPlan,
   setShowFloorPlan,
-  showLeadForm,
-  setShowLeadForm,
 }: TourProps) {
   const viewerRef = useRef<HTMLDivElement>(null);
   const viewerInstance = useRef<Viewer | null>(null);
@@ -175,14 +173,13 @@ export default function Tour({
         onNextScene={onNextScene}
         onPrevScene={onPrevScene}
         onSceneSelect={onNavigate}
+        onRequestVisit={onRequestVisit}
         showInfo={showInfo}
         setShowInfo={setShowInfo}
         showAssistant={showAssistant}
         setShowAssistant={setShowAssistant}
         showFloorPlan={showFloorPlan}
         setShowFloorPlan={setShowFloorPlan}
-        showLeadForm={showLeadForm}
-        setShowLeadForm={setShowLeadForm}
       />
 
       {infoHotspot && (

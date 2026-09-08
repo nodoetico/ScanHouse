@@ -4,7 +4,6 @@ import Landing from './components/Landing';
 import Tour from './components/Tour';
 import PropertyInfo from './components/PropertyInfo';
 import Assistant from './components/Assistant';
-import LeadForm from './components/LeadForm';
 import FinalCTA from './components/FinalCTA';
 import FloorPlan from './components/FloorPlan';
 import NavigationIndicator from './components/NavigationIndicator';
@@ -17,7 +16,6 @@ function App() {
   const [showInfo, setShowInfo] = useState(false);
   const [showAssistant, setShowAssistant] = useState(false);
   const [showFloorPlan, setShowFloorPlan] = useState(false);
-  const [showLeadForm, setShowLeadForm] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const currentScene = property.scenes[currentSceneIndex];
@@ -51,19 +49,13 @@ function App() {
     setView('tour');
   }, []);
 
-  const handleLeadSubmit = useCallback(() => {
-    setShowLeadForm(false);
-    setTimeout(() => setView('final'), 500);
+  const handleGoToFinal = useCallback(() => {
+    setView('final');
   }, []);
 
   const handleRestartTour = useCallback(() => {
     setView('tour');
     setCurrentSceneIndex(0);
-  }, []);
-
-  const handleRequestVisit = useCallback(() => {
-    setView('tour');
-    setShowLeadForm(true);
   }, []);
 
   return (
@@ -96,8 +88,7 @@ function App() {
           setShowAssistant={setShowAssistant}
           showFloorPlan={showFloorPlan}
           setShowFloorPlan={setShowFloorPlan}
-          showLeadForm={showLeadForm}
-          setShowLeadForm={setShowLeadForm}
+          onRequestVisit={handleGoToFinal}
         />
         <NavigationIndicator
           currentScene={currentScene}
@@ -124,13 +115,6 @@ function App() {
             onClose={() => setShowFloorPlan(false)}
           />
         )}
-        {showLeadForm && (
-          <LeadForm
-            property={property}
-            onSubmit={handleLeadSubmit}
-            onClose={() => setShowLeadForm(false)}
-          />
-        )}
         </>
         )}
       </div>
@@ -143,7 +127,6 @@ function App() {
         <FinalCTA
           property={property}
           onRestart={handleRestartTour}
-          onRequestVisit={handleRequestVisit}
         />
       </div>
     </div>
