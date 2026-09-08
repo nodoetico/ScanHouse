@@ -24,8 +24,24 @@ interface TourProps {
 function createTooltip(hs: Hotspot): (el: HTMLElement) => void {
   return (el) => {
     const label = document.createElement('div');
-    label.className = 'pnlm-tooltip';
-    label.textContent = hs.type === 'navigation' ? `${hs.name} →` : hs.name;
+    label.className = `pnlm-tooltip pnlm-tooltip-${hs.type}`;
+    if (hs.type === 'navigation') {
+      const badge = document.createElement('span');
+      badge.className = 'pnlm-tooltip-badge pnlm-tooltip-badge-nav';
+      badge.textContent = 'IR A';
+      label.appendChild(badge);
+      const txt = document.createElement('span');
+      txt.textContent = `${hs.name} →`;
+      label.appendChild(txt);
+    } else {
+      const badge = document.createElement('span');
+      badge.className = 'pnlm-tooltip-badge pnlm-tooltip-badge-info';
+      badge.textContent = 'INFO';
+      label.appendChild(badge);
+      const txt = document.createElement('span');
+      txt.textContent = hs.name;
+      label.appendChild(txt);
+    }
     el.appendChild(label);
   };
 }
