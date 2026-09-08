@@ -39,12 +39,12 @@ export default function TourControls({
   return (
     <div className="fixed inset-0 pointer-events-none z-30" aria-hidden="true">
       <div className="fixed top-6 left-6 right-6 flex items-start justify-between pointer-events-auto">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-black/35 backdrop-blur-md border border-white/20 shadow-lg shadow-black/20">
           <span className="font-display text-xl font-medium text-white">
             {property.branding.name}
           </span>
-          <span className="hidden md:block w-px h-6 bg-white/10" />
-          <span className="font-mono text-xs uppercase tracking-widest text-white/40">
+          <span className="hidden md:block w-px h-6 bg-white/20" />
+          <span className="font-mono text-xs uppercase tracking-widest text-white/70">
             {currentScene.name}
           </span>
         </div>
@@ -86,7 +86,7 @@ export default function TourControls({
           <ControlButton
             onClick={onRequestVisit}
             aria-label="Me interesa esta propiedad - Solicitar visita"
-            className="bg-white/10 border-white/20 hover:bg-white/20"
+            className="bg-black/40 border-white/25 hover:bg-black/60"
           >
             <span className="font-mono text-xs uppercase tracking-wider hidden sm:inline">ME INTERESA</span>
             <svg className="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -109,7 +109,7 @@ export default function TourControls({
             </svg>
           </NavButton>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-black/35 backdrop-blur-md border border-white/20">
             {property.scenes.map((scene, index) => (
               <button
                 key={scene.id}
@@ -117,7 +117,7 @@ export default function TourControls({
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
                   index === currentSceneIndex
                     ? 'bg-white w-6'
-                    : 'bg-white/30 hover:bg-white/50'
+                    : 'bg-white/45 hover:bg-white/70'
                 }`}
                 aria-label={`Ir a ${scene.name}`}
                 aria-current={index === currentSceneIndex ? 'step' : undefined}
@@ -137,7 +137,7 @@ export default function TourControls({
           </NavButton>
         </div>
 
-        <div className="font-mono text-xs uppercase tracking-widest text-white/30">
+        <div className="px-3 py-2 rounded-xl bg-black/35 backdrop-blur-md border border-white/20 font-mono text-xs uppercase tracking-widest text-white/80">
           {String(currentSceneIndex + 1).padStart(2, '0')} / {String(totalScenes).padStart(2, '0')}
         </div>
       </div>
@@ -156,11 +156,12 @@ function ControlButton({
     <button
       onClick={onClick}
       className={`
-        w-12 h-12 rounded-xl flex items-center justify-center
-        bg-white/5 backdrop-blur border border-white/10
-        hover:bg-white/10 hover:border-white/20
+        w-12 h-12 rounded-xl flex items-center justify-center text-white
+        bg-black/35 backdrop-blur-md border border-white/20
+        shadow-lg shadow-black/20
+        hover:bg-black/55 hover:border-white/40
         transition-all duration-300
-        ${active ? 'bg-white/15 border-white/30' : ''}
+        ${active ? 'bg-black/60 border-white/50' : ''}
         ${className}
       `}
       {...props}
@@ -181,9 +182,10 @@ function NavButton({
       onClick={onClick}
       disabled={disabled}
       className={`
-        w-14 h-14 rounded-xl flex items-center justify-center
-        bg-white/5 backdrop-blur border border-white/10
-        hover:bg-white/10 hover:border-white/20
+        w-14 h-14 rounded-xl flex items-center justify-center text-white
+        bg-black/35 backdrop-blur-md border border-white/20
+        shadow-lg shadow-black/20
+        hover:bg-black/55 hover:border-white/40
         transition-all duration-300
         ${disabled ? 'opacity-30 pointer-events-none' : ''}
       `}

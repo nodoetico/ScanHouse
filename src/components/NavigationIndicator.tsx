@@ -12,8 +12,8 @@ export default function NavigationIndicator({ currentScene, currentIndex }: Navi
       aria-live="polite"
       aria-atomic="true"
     >
-      <div className="glass px-5 py-3 rounded-xl border-l-4 border-white/20">
-        <p className="font-mono text-xs uppercase tracking-widest text-white/40 mb-1">
+      <div className="px-5 py-3 rounded-xl bg-black/40 backdrop-blur-md border border-white/20 border-l-4 shadow-lg shadow-black/20">
+        <p className="font-mono text-xs uppercase tracking-widest text-white/60 mb-1">
           ESTÁS EN
         </p>
         <p className="font-display text-lg font-medium text-white">
