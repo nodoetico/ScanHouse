@@ -69,9 +69,11 @@ export default function ParticleBlobButton({ onClick, label }: ParticleBlobButto
     };
 
     build();
-    const ro = new ResizeObserver(build);
-    ro.observe(wrap);
-    return () => ro.disconnect();
+    if (typeof ResizeObserver !== 'undefined') {
+      const ro = new ResizeObserver(build);
+      ro.observe(wrap);
+      return () => ro.disconnect();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
