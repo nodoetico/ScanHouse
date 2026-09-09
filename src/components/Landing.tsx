@@ -5,9 +5,10 @@ import ParticleBlobButton from './ParticleBlobButton';
 interface LandingProps {
   onEnter: () => void;
   branding: Branding;
+  onAdmin?: () => void;
 }
 
-export default function Landing({ onEnter, branding }: LandingProps) {
+export default function Landing({ onEnter, branding, onAdmin }: LandingProps) {
   const [phase, setPhase] = useState<'initial' | 'reveal' | 'cta'>('initial');
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -87,6 +88,15 @@ export default function Landing({ onEnter, branding }: LandingProps) {
           <p className="mt-8 font-mono text-xs uppercase tracking-widest text-white/30">
             Presiona ENTER o haz clic para comenzar
           </p>
+
+          {onAdmin && (
+            <button
+              onClick={onAdmin}
+              className="mt-6 font-mono text-[10px] uppercase tracking-widest text-white/25 hover:text-white/60 transition-colors cursor-pointer"
+            >
+              Panel de gestión →
+            </button>
+          )}
         </div>
       </div>
     </div>
