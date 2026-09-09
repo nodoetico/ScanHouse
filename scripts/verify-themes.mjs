@@ -13,7 +13,7 @@ const agencies = ['Roca', 'Remax', 'Leona', 'Emilia', 'Navarro', 'Agostini'];
 
 await page.goto('http://localhost:5199', { waitUntil: 'networkidle2', timeout: 30000 });
 await delays(1600);
-await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Panel de gestión'))?.click());
+await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('INGRESAR'))?.click());
 await delays(800);
 
 const themes = [];

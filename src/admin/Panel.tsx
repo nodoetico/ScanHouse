@@ -31,7 +31,7 @@ const nav: { id: View; label: string; icon: string; badge?: string }[] = [
   { id: 'settings', label: 'Configuración', icon: '⚙' },
 ];
 
-export default function Panel({ onOpenExperience }: { onOpenExperience: (propertyId: string) => void }) {
+export default function Panel({ onOpenExperience, onExitDemo }: { onOpenExperience: (propertyId: string) => void; onExitDemo: () => void }) {
   const { agency, logout } = useSession();
   const [view, setView] = useState<View>('dashboard');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -39,6 +39,8 @@ export default function Panel({ onOpenExperience }: { onOpenExperience: (propert
   if (!agency) return null;
 
   const primary = agency.branding.primaryColor;
+  const firstActive = agency.properties.find(p => p.status === 'activa' && p.hasExperience360)?.id
+    ?? agency.properties.find(p => p.status === 'activa')?.id;
 
   return (
     <div className="fixed inset-0 bg-[var(--sh-bg)] text-[var(--sh-text)] flex overflow-hidden" style={panelTokens(agency.branding)}>
@@ -101,6 +103,13 @@ export default function Panel({ onOpenExperience }: { onOpenExperience: (propert
 
         <div className="p-3 border-t border-[var(--sh-border)] flex flex-col gap-1">
           <button
+            onClick={onExitDemo}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-[var(--sh-muted)] hover:text-[var(--sh-text)] hover:bg-[var(--sh-inset)] transition-colors cursor-pointer"
+          >
+            <span className="w-5 text-center">↺</span>
+            <span>Volver al selector de demo</span>
+          </button>
+          <button
             onClick={logout}
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-[var(--sh-muted)] hover:text-[var(--sh-text)] hover:bg-[var(--sh-inset)] transition-colors cursor-pointer"
           >
@@ -139,13 +148,14 @@ export default function Panel({ onOpenExperience }: { onOpenExperience: (propert
               <span className="w-1.5 h-1.5 rounded-full" style={{ background: primary }} />
               {agency.contact.domain ?? agency.name}
             </span>
-            <button
-              onClick={() => onOpenExperience('casa-laureles')}
-              className="px-3.5 py-1.5 rounded-lg text-xs text-[var(--sh-on-primary)] font-medium transition-colors cursor-pointer"
-              style={{ background: primary }}
-            >
-              Ver experiencia
-            </button>
+<button
+            onClick={() => firstActive && onOpenExperience(firstActive)}
+            disabled={!firstActive}
+            className="px-3.5 py-1.5 rounded-lg text-xs text-[var(--sh-on-primary)] font-medium transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+            style={{ background: primary }}
+          >
+            Ver experiencia
+          </button>
           </div>
         </header>
 

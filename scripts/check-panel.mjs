@@ -11,8 +11,9 @@ const report = (ok, name, detail = '') => { results.push(ok); console.log(`${ok 
 
 await page.goto('http://localhost:5199', { waitUntil: 'networkidle2', timeout: 30000 });
 await delays(1600);
+report(await page.evaluate(() => document.body.textContent.includes('¿Qué querés explorar?')), 'Selector de demo visible (landing)');
 
-await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Panel de gestión'))?.click());
+await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('INGRESAR'))?.click());
 await delays(800);
 report(await page.evaluate(() => document.body.textContent.includes('SCANHOUSE')), 'Login visible');
 

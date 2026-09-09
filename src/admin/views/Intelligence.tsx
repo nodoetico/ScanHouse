@@ -1,16 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession } from '../../context/SessionContext';
 import { Card, StatCard, SectionTitle, Badge } from '../ui';
 import { formatNumber } from '../ui';
+import { comparisonsFor, searchInterests } from '../../data/comparisons';
+import { liveEventsFor, subscribeLive, liveEventLabel, liveEventIcon, type LiveEventKind } from '../../data/liveActivity';
 
-type Tab = 'analiticas' | 'preguntas' | 'comportamiento' | 'interaccion';
+type Tab = 'analiticas' | 'preguntas' | 'comportamiento' | 'interaccion' | 'comparacion';
 
 const tabs: { id: Tab; label: string }[] = [
   { id: 'analiticas', label: 'Analíticas' },
   { id: 'preguntas', label: 'Preguntas frecuentes' },
   { id: 'comportamiento', label: 'Comportamiento' },
   { id: 'interaccion', label: 'Interacción con propiedades' },
+  { id: 'comparacion', label: 'Comparación' },
 ];
+
+function ago(ts: number): string {
+  const s = Math.max(1, Math.round((Date.now() - ts) / 1000));
+  if (s < 60) return `hace ${s} s`;
+  const m = Math.round(s / 60);
+  if (m < 60) return `hace ${m} min`;
+  return `hace ${Math.round(m / 60)} h`;
+}
 
 export default function Intelligence() {
   const { agency } = useSession();
@@ -20,6 +31,28 @@ export default function Intelligence() {
 
   const propName = (id: string) => agency.properties.find(p => p.id === id)?.name ?? id;
   const maxFaq = Math.max(...agency.aiQuestions.map(q => q.count), 1);
+  const comparisons = comparisonsFor(agency);
+  const maxComp = Math.max(...comparisons.map(c => c.count), 1);
+  const [live, setLive] = useState(() => liveEventsFor(agency.id));
+
+  useEffect(() => {
+    setLive(liveEventsFor(agency.id));
+    return subscribeLive(() => setLive(liveEventsFor(agency.id)));
+  }, [agency.id]);
+
+  const liveFeed = live.length > 0
+    ? live
+    : agency.activity.slice(0, 4).map(a => {
+        const kind: LiveEventKind =
+          a.type === 'plano-interactivo' ? 'plano'
+          : a.type === 'consulta-ia' ? 'ia'
+          : a.type === 'whatsapp' ? 'whatsapp'
+          : a.type === 'nuevo-lead' ? 'vista-propiedad'
+          : a.type === 'tour-completado' ? 'tour-360'
+          : 'visita';
+        return { id: 0, agencyId: agency.id, propertyName: a.description, kind, time: Date.now() };
+      });
+  const isLiveFeed = live.length > 0;
 
   return (
     <div className="animate-fade-in">
@@ -154,6 +187,87 @@ export default function Intelligence() {
             </table>
           </div>
         </Card>
+      )}
+    {tab === 'comparacion' && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card className="p-5">
+            <div className="flex items-center justify-between gap-3 mb-4">
+              <h3 className="font-display text-[var(--sh-text)] text-lg">Actividad reciente de clientes</h3>
+              {isLiveFeed && (
+                <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-[#34d399]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#34d399] animate-pulse" />
+                  En vivo
+                </span>
+              )}
+            </div>
+            <ul className="flex flex-col gap-2.5">
+              {liveFeed.map((e, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm">
+                  <span className="w-7 h-7 shrink-0 rounded-lg bg-[var(--sh-inset)] flex items-center justify-center text-xs" style={{ color: 'var(--sh-primary)' }}>
+                    {liveEventIcon[e.kind] ?? '•'}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[var(--sh-text)]">{liveEventLabel[e.kind] ?? 'Actividad del cliente'}<span className="text-[var(--sh-faint)]"> — </span>{e.propertyName}</p>
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)] mt-0.5">
+                      {ago(e.time)}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 text-xs text-[var(--sh-faint)]">
+              Cada interacción del cliente en la experiencia pública se convierte en información comercial.
+            </p>
+          </Card>
+
+          <Card className="p-5">
+            <h3 className="font-display text-[var(--sh-text)] text-lg mb-4">Comportamiento de comparación</h3>
+            <p className="text-xs text-[var(--sh-faint)] mb-4">
+              Propiedades comparadas entre sí durante la experiencia del cliente.
+            </p>
+            {comparisons.length === 0 && (
+              <p className="text-sm text-[var(--sh-muted)]">Aún no hay comparaciones registradas para esta agencia.</p>
+            )}
+            <ul className="flex flex-col gap-3">
+              {comparisons.map(c => (
+                <li key={`${c.fromPropertyId}-${c.toPropertyId}`}>
+                  <div className="flex items-center justify-between gap-3 text-sm">
+                    <span className="text-[var(--sh-text)]">
+                      {propName(c.fromPropertyId)} <span className="text-[var(--sh-faint)]">↔</span> {propName(c.toPropertyId)}
+                    </span>
+                    <span className="font-mono text-xs text-[var(--sh-text)]">{c.count} veces</span>
+                  </div>
+                  <div className="mt-1.5 h-1 rounded-full bg-[var(--sh-inset)] overflow-hidden">
+                    <div
+                      className="h-full rounded-full"
+                      style={{ width: `${(c.count / maxComp) * 100}%`, background: agency.branding.primaryColor }}
+                    />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Card>
+
+          <Card className="p-5 lg:col-span-2">
+            <h3 className="font-display text-[var(--sh-text)] text-lg mb-3">¿Qué están buscando los clientes?</h3>
+            <p className="text-xs text-[var(--sh-faint)] mb-5">
+              Distribución de temas consultados por los visitantes de tus publicaciones.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+              {searchInterests.map(s => (
+                <div key={s.topic} className="rounded-xl border border-[var(--sh-border-soft)] bg-[var(--sh-surface)] p-4">
+                  <p className="font-mono text-2xl text-[var(--sh-text)]" style={{ color: agency.branding.primaryColor }}>
+                    {s.pct}%
+                  </p>
+                  <p className="text-xs text-[var(--sh-text-soft)] mt-1">{s.topic}</p>
+                  <div className="mt-3 h-1 rounded-full bg-[var(--sh-inset)] overflow-hidden">
+                    <div className="h-full rounded-full" style={{ width: `${s.pct}%`, background: agency.branding.primaryColor }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
       )}
     </div>
   );
