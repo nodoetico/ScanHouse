@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSession } from '../context/SessionContext';
+import { panelTokens } from './theme';
 import Dashboard from './views/Dashboard';
 import Properties from './views/Properties';
 import Intelligence from './views/Intelligence';
@@ -40,24 +41,24 @@ export default function Panel({ onOpenExperience }: { onOpenExperience: (propert
   const primary = agency.branding.primaryColor;
 
   return (
-    <div className="fixed inset-0 bg-[#0a0a0b] text-white flex overflow-hidden">
+    <div className="fixed inset-0 bg-[var(--sh-bg)] text-[var(--sh-text)] flex overflow-hidden" style={panelTokens(agency.branding)}>
       <aside
         className={`${
           menuOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-40 w-64 border-r border-white/10 bg-black/80 backdrop-blur-xl flex flex-col transition-transform duration-300 lg:transition-none`}
+        } lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-40 w-64 border-r border-[var(--sh-border)] bg-[var(--sh-sidebar)] backdrop-blur-xl flex flex-col transition-transform duration-300 lg:transition-none`}
       >
-        <div className="p-5 border-b border-white/10">
+        <div className="p-5 border-b border-[var(--sh-border)]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-[var(--sh-surface-2)] border border-[var(--sh-border)] flex items-center justify-center overflow-hidden shrink-0">
               {agency.logo ? (
                 <img src={agency.logo} alt={agency.name} className="max-h-full max-w-full object-contain p-1" />
               ) : (
-                <span className="font-display text-white">{agency.shortName[0]}</span>
+                <span className="font-display text-[var(--sh-text)]">{agency.shortName[0]}</span>
               )}
             </div>
             <div className="min-w-0">
-              <p className="font-display text-white text-sm truncate">{agency.shortName}</p>
-              <p className="font-mono text-[9px] uppercase tracking-widest text-white/40 truncate">ScanHouse · Panel</p>
+              <p className="font-display text-[var(--sh-text)] text-sm truncate">{agency.shortName}</p>
+              <p className="font-mono text-[9px] uppercase tracking-widest text-[var(--sh-faint)] truncate">ScanHouse · Panel</p>
             </div>
           </div>
         </div>
@@ -69,44 +70,44 @@ export default function Panel({ onOpenExperience }: { onOpenExperience: (propert
               onClick={() => { setView(item.id); setMenuOpen(false); }}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all cursor-pointer text-left ${
                 view === item.id
-                  ? 'bg-white/10 text-white'
-                  : 'text-white/55 hover:text-white hover:bg-white/[0.05]'
+                  ? 'bg-[var(--sh-inset)] text-[var(--sh-text)]'
+                  : 'text-[var(--sh-muted)] hover:text-[var(--sh-text)] hover:bg-[var(--sh-inset)]'
               }`}
               style={view === item.id ? { boxShadow: `inset 3px 0 0 ${primary}` } : undefined}
             >
-              <span className="w-5 text-center text-white/70" style={view === item.id ? { color: primary } : undefined}>
+              <span className="w-5 text-center text-[var(--sh-text-soft)]" style={view === item.id ? { color: primary } : undefined}>
                 {item.icon}
               </span>
               <span className="flex-1">{item.label}</span>
               {item.badge && (
-                <span className="font-mono text-[9px] px-1.5 py-0.5 rounded-full border border-white/20 text-white/60">
+                <span className="font-mono text-[9px] px-1.5 py-0.5 rounded-full border border-[var(--sh-border)] text-[var(--sh-faint)]">
                   {item.badge}
                 </span>
               )}
             </button>
           ))}
 
-          <div className="mt-4 pt-4 border-t border-white/10 flex flex-col gap-1">
-            <div className="px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-white/30">
+          <div className="mt-4 pt-4 border-t border-[var(--sh-border)] flex flex-col gap-1">
+            <div className="px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)]">
               Próximamente
             </div>
-            <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/35">
+            <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-[var(--sh-muted)]">
               <span className="w-5 text-center">◆</span>
               <span className="flex-1">Producción</span>
-              <span className="font-mono text-[9px] px-1.5 py-0.5 rounded-full border border-white/15 text-white/40">2026</span>
+              <span className="font-mono text-[9px] px-1.5 py-0.5 rounded-full border border-[var(--sh-border)] text-[var(--sh-faint)]">2026</span>
             </div>
           </div>
         </nav>
 
-        <div className="p-3 border-t border-white/10 flex flex-col gap-1">
+        <div className="p-3 border-t border-[var(--sh-border)] flex flex-col gap-1">
           <button
             onClick={logout}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/60 hover:text-white hover:bg-white/[0.05] transition-colors cursor-pointer"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-[var(--sh-muted)] hover:text-[var(--sh-text)] hover:bg-[var(--sh-inset)] transition-colors cursor-pointer"
           >
             <span className="w-5 text-center">↩</span>
             <span>Cerrar sesión</span>
           </button>
-          <div className="px-3 pt-2 font-mono text-[9px] uppercase tracking-widest text-white/25">
+          <div className="px-3 pt-2 font-mono text-[9px] uppercase tracking-widest text-[var(--sh-faint)]">
             v0.1 · Nodo Ético
           </div>
         </div>
@@ -117,30 +118,30 @@ export default function Panel({ onOpenExperience }: { onOpenExperience: (propert
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-16 shrink-0 border-b border-white/10 bg-black/40 backdrop-blur-xl flex items-center gap-3 px-4 sm:px-6">
+        <header className="h-16 shrink-0 border-b border-[var(--sh-border)] bg-[var(--sh-header)] backdrop-blur-xl flex items-center gap-3 px-4 sm:px-6">
           <button
             onClick={() => setMenuOpen(true)}
-            className="lg:hidden w-9 h-9 flex items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white/80 cursor-pointer"
+            className="lg:hidden w-9 h-9 flex items-center justify-center rounded-lg border border-[var(--sh-border)] bg-[var(--sh-surface-2)] text-[var(--sh-text-soft)] cursor-pointer"
             aria-label="Abrir menú"
           >
             ☰
           </button>
           <div className="min-w-0">
-            <p className="font-mono text-[10px] uppercase tracking-widest text-white/40">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)]">
               {agency.name}
             </p>
-            <p className="font-display text-white text-sm truncate">
+            <p className="font-display text-[var(--sh-text)] text-sm truncate">
               {nav.find(n => n.id === view)?.label}
             </p>
           </div>
           <div className="ml-auto flex items-center gap-2">
-            <span className="hidden md:inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/45 border border-white/10 rounded-full px-3 py-1">
+            <span className="hidden md:inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-[var(--sh-muted)] border border-[var(--sh-border)] rounded-full px-3 py-1">
               <span className="w-1.5 h-1.5 rounded-full" style={{ background: primary }} />
               {agency.contact.domain ?? agency.name}
             </span>
             <button
               onClick={() => onOpenExperience('casa-laureles')}
-              className="px-3.5 py-1.5 rounded-lg text-xs text-black font-medium transition-colors cursor-pointer"
+              className="px-3.5 py-1.5 rounded-lg text-xs text-[var(--sh-on-primary)] font-medium transition-colors cursor-pointer"
               style={{ background: primary }}
             >
               Ver experiencia

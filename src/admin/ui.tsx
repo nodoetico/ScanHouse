@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from 'react';
 
 export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm ${className}`}>
+    <div className={`rounded-2xl border border-[var(--sh-border)] bg-[var(--sh-surface)] backdrop-blur-sm ${className}`}>
       {children}
     </div>
   );
@@ -21,11 +21,11 @@ export function StatCard({
 }) {
   return (
     <Card className="p-5 flex flex-col gap-1">
-      <span className="text-[11px] uppercase tracking-widest text-white/45 font-mono">{label}</span>
-      <span className="text-3xl font-display text-white" style={accent ? { color: accent } : undefined}>
+      <span className="text-[11px] uppercase tracking-widest text-[var(--sh-muted)] font-mono">{label}</span>
+      <span className="text-3xl font-display text-[var(--sh-text)]" style={accent ? { color: accent } : undefined}>
         {value}
       </span>
-      {hint && <span className="text-xs text-white/40">{hint}</span>}
+      {hint && <span className="text-xs text-[var(--sh-muted)]">{hint}</span>}
     </Card>
   );
 }
@@ -48,8 +48,8 @@ export function Badge({ children, accent, subtle = true }: { children: ReactNode
 export function SectionTitle({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
     <div className="mb-6">
-      <h2 className="text-2xl font-display text-white tracking-tight">{title}</h2>
-      {subtitle && <p className="text-sm text-white/45 mt-1 max-w-2xl">{subtitle}</p>}
+      <h2 className="text-2xl font-display text-[var(--sh-text)] tracking-tight">{title}</h2>
+      {subtitle && <p className="text-sm text-[var(--sh-muted)] mt-1 max-w-2xl">{subtitle}</p>}
     </div>
   );
 }
@@ -79,7 +79,7 @@ export function BarChart({
               title={`${d.day}: ${d.count.toLocaleString('es-AR')}`}
             />
             {i % 5 === 0 && (
-              <span className="text-[9px] text-white/30 font-mono whitespace-nowrap">{d.day}</span>
+              <span className="text-[9px] text-[var(--sh-faint)] font-mono whitespace-nowrap">{d.day}</span>
             )}
           </div>
         ))}
@@ -90,7 +90,7 @@ export function BarChart({
 
 export function ProgressBar({ value, accent }: { value: number; accent: string }) {
   return (
-    <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+    <div className="h-1.5 w-full rounded-full bg-[var(--sh-inset)] overflow-hidden">
       <div
         className="h-full rounded-full"
         style={{ width: `${Math.min(value, 100)}%`, background: accent }}
@@ -112,7 +112,7 @@ export function IconButton({
     <button
       onClick={onClick}
       title={title}
-      className="w-9 h-9 flex items-center justify-center rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors cursor-pointer"
+      className="w-9 h-9 flex items-center justify-center rounded-lg border border-[var(--sh-border)] bg-[var(--sh-surface-2)] hover:bg-[var(--sh-inset)] text-[var(--sh-text-soft)] hover:text-[var(--sh-text)] transition-colors cursor-pointer"
     >
       {children}
     </button>
@@ -133,11 +133,11 @@ export function Select({
     <select
       value={value}
       onChange={e => onChange(e.target.value)}
-      className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white font-sans cursor-pointer outline-none focus:border-white/30"
+      className="px-3 py-2 rounded-lg bg-[var(--sh-surface-2)] border border-[var(--sh-border)] text-sm text-[var(--sh-text)] font-sans cursor-pointer outline-none focus:border-[var(--sh-border-strong)]"
       style={styles}
     >
       {options.map(o => (
-        <option key={o.value} value={o.value} className="bg-zinc-900 text-white">
+        <option key={o.value} value={o.value} className="bg-[var(--sh-inset)] text-[var(--sh-text)]">
           {o.label}
         </option>
       ))}
@@ -148,8 +148,8 @@ export function Select({
 export function EmptyState({ title, description }: { title: string; description?: string }) {
   return (
     <div className="py-16 text-center">
-      <p className="text-white/70 font-display text-lg">{title}</p>
-      {description && <p className="text-sm text-white/40 mt-1">{description}</p>}
+      <p className="text-[var(--sh-text-soft)] font-display text-lg">{title}</p>
+      {description && <p className="text-sm text-[var(--sh-muted)] mt-1">{description}</p>}
     </div>
   );
 }

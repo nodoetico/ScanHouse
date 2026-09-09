@@ -24,13 +24,13 @@ export default function Analytics() {
             key={p}
             onClick={() => setPeriod(p)}
             className={`px-3.5 py-1.5 rounded-full font-mono text-[11px] uppercase tracking-widest border transition-colors cursor-pointer ${
-              period === p ? 'text-white bg-white/10 border-white/30' : 'text-white/50 border-white/10 hover:text-white/80'
+              period === p ? 'text-[var(--sh-text)] bg-[var(--sh-inset)] border-[var(--sh-border-strong)]' : 'text-[var(--sh-muted)] border-[var(--sh-border)] hover:text-[var(--sh-text-soft)]'
             }`}
           >
             {p} días
           </button>
         ))}
-        <span className="ml-auto font-mono text-[10px] uppercase tracking-widest text-white/35">Período seleccionado · todos los orígenes</span>
+        <span className="ml-auto font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)]">Período seleccionado · todos los orígenes</span>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
@@ -42,21 +42,21 @@ export default function Analytics() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <Card className="p-5">
-          <h3 className="font-display text-white text-sm mb-4">Visitantes por día</h3>
+          <h3 className="font-display text-[var(--sh-text)] text-sm mb-4">Visitantes por día</h3>
           <BarChart data={visitors} accent={agency.branding.primaryColor} height={140} />
         </Card>
         <Card className="p-5">
-          <h3 className="font-display text-white text-sm mb-4">Interacciones por día</h3>
+          <h3 className="font-display text-[var(--sh-text)] text-sm mb-4">Interacciones por día</h3>
           <BarChart data={interactions} accent={agency.branding.accentColor} height={140} />
         </Card>
       </div>
 
       <Card className="p-5">
-        <h3 className="font-display text-white text-lg mb-4">Rendimiento integral</h3>
+        <h3 className="font-display text-[var(--sh-text)] text-lg mb-4">Rendimiento integral</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm min-w-[720px]">
             <thead>
-              <tr className="font-mono text-[10px] uppercase tracking-widest text-white/40">
+              <tr className="font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)]">
                 <th className="text-left pb-3 font-normal">Área</th>
                 <th className="text-right pb-3 font-normal">Métricas principales</th>
                 <th className="text-right pb-3 font-normal">Propiedad destacada</th>
@@ -73,10 +73,10 @@ export default function Analytics() {
                 { area: 'WhatsApp', value: String(agency.analytics.whatsappContacts), top: `${Math.round(agency.analytics.whatsappContacts / (agency.analytics.visitors / 10))} por cada 100 visitas` },
                 { area: 'Conversiones', value: agency.analytics.conversions[1]?.value ?? '—', top: `${agency.analytics.conversions[3]?.value ?? '—'} a oportunidad` },
               ].map((row) => (
-                <tr key={row.area} className="border-t border-white/5">
-                  <td className="py-3 pr-3 text-white/90 whitespace-nowrap">{row.area}</td>
-                  <td className="py-3 pr-3 text-right text-white/70 whitespace-nowrap">{row.value}</td>
-                  <td className="py-3 text-right text-white/45 whitespace-nowrap">{row.top}</td>
+                <tr key={row.area} className="border-t border-[var(--sh-border-soft)]">
+                  <td className="py-3 pr-3 text-[var(--sh-text)] whitespace-nowrap">{row.area}</td>
+                  <td className="py-3 pr-3 text-right text-[var(--sh-text-soft)] whitespace-nowrap">{row.value}</td>
+                  <td className="py-3 text-right text-[var(--sh-muted)] whitespace-nowrap">{row.top}</td>
                 </tr>
               ))}
             </tbody>

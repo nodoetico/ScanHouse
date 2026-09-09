@@ -1,7 +1,17 @@
 import { useState } from 'react';
 import { agencies } from '../data/agencies';
-import type { AgencyId } from '../types/agency';
+import type { Agency, AgencyId } from '../types/agency';
 import { useSession } from '../context/SessionContext';
+import { panelTokens } from './theme';
+
+const DEFAULT_BRAND: Agency['branding'] = {
+  primaryColor: '#ffffff',
+  secondaryColor: '#0a0a0a',
+  tertiaryColor: '#1f2937',
+  backgroundColor: '#050506',
+  textColor: '#ffffff',
+  accentColor: '#ffffff',
+};
 
 export default function Login({ onLogin }: { onLogin?: () => void }) {
   const { login } = useSession();
@@ -31,24 +41,31 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
     onLogin?.();
   };
 
+  const tokens = selected ? panelTokens(selected.branding) : panelTokens(DEFAULT_BRAND);
+  const tint = selected ? selected.branding.primaryColor : 'rgba(255,255,255,0.08)';
+
   return (
-    <div className="fixed inset-0 bg-black text-white overflow-y-auto">
-      <div className="fixed inset-0 bg-gradient-radial from-zinc-900/60 via-black to-black" aria-hidden="true" />
+    <div className="fixed inset-0 bg-[var(--sh-bg)] text-[var(--sh-text)] overflow-y-auto" style={tokens as React.CSSProperties}>
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{ background: `radial-gradient(900px 500px at 50% 0%, ${tint}26, transparent 65%)` }}
+        aria-hidden="true"
+      />
       <div className="relative min-h-full flex flex-col items-center justify-center px-6 py-10">
         <div className="w-full max-w-md">
           <div className="flex items-center justify-center gap-3 mb-8">
-            <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center font-display text-xl text-white">
+            <div className="w-12 h-12 rounded-2xl bg-[var(--sh-surface-2)] border border-[var(--sh-border)] flex items-center justify-center font-display text-xl text-[var(--sh-text)]">
               SH
             </div>
             <div>
-              <div className="font-display text-xl tracking-wide text-white">SCANHOUSE</div>
-              <div className="font-mono text-[10px] uppercase tracking-widest text-white/40">
+              <div className="font-display text-xl tracking-wide text-[var(--sh-text)]">SCANHOUSE</div>
+              <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--sh-muted)]">
                 Experiencias inmobiliarias inteligentes
               </div>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-6 sm:p-8">
+          <div className="rounded-2xl border border-[var(--sh-border)] bg-[var(--sh-surface)] backdrop-blur-md p-6 sm:p-8">
             <div className="flex flex-col items-center mb-6">
               {selected ? (
                 <img
@@ -57,19 +74,19 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
                   className="h-12 w-auto max-w-[220px] object-contain mb-3"
                 />
               ) : (
-                <div className="h-12 w-12 rounded-full bg-white/5 border border-white/10 mb-3" />
+                <div className="h-12 w-12 rounded-full bg-[var(--sh-surface-2)] border border-[var(--sh-border)] mb-3" />
               )}
-              <h1 className="font-display text-xl tracking-tight text-white">
+              <h1 className="font-display text-xl tracking-tight text-[var(--sh-text)] text-center">
                 {selected ? selected.name : 'Panel de gestión'}
               </h1>
-              <p className="font-mono text-[10px] uppercase tracking-widest text-white/40 mt-1">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--sh-muted)] mt-1">
                 {selected ? 'Panel de gestión' : 'Ingresá tus credenciales'}
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div>
-                <label className="block font-mono text-[10px] uppercase tracking-widest text-white/50 mb-1.5">
+                <label className="block font-mono text-[10px] uppercase tracking-widest text-[var(--sh-muted)] mb-1.5">
                   Usuario
                 </label>
                 <input
@@ -78,11 +95,11 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
                   onChange={e => setEmail(e.target.value)}
                   placeholder="usuario@inmobiliaria.com"
                   autoComplete="username"
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm outline-none focus:border-white/30 transition-colors placeholder:text-white/25"
+                  className="w-full px-4 py-3 rounded-xl bg-[var(--sh-surface-2)] border border-[var(--sh-border)] text-[var(--sh-text)] text-sm outline-none focus:border-[var(--sh-border-strong)] transition-colors placeholder:text-[var(--sh-faint)]"
                 />
               </div>
               <div>
-                <label className="block font-mono text-[10px] uppercase tracking-widest text-white/50 mb-1.5">
+                <label className="block font-mono text-[10px] uppercase tracking-widest text-[var(--sh-muted)] mb-1.5">
                   Contraseña
                 </label>
                 <input
@@ -91,7 +108,7 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
                   onChange={e => setPassword(e.target.value)}
                   placeholder="••••••••"
                   autoComplete="current-password"
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm outline-none focus:border-white/30 transition-colors placeholder:text-white/25"
+                  className="w-full px-4 py-3 rounded-xl bg-[var(--sh-surface-2)] border border-[var(--sh-border)] text-[var(--sh-text)] text-sm outline-none focus:border-[var(--sh-border-strong)] transition-colors placeholder:text-[var(--sh-faint)]"
                 />
               </div>
 
@@ -103,14 +120,14 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl bg-white text-black font-mono text-sm uppercase tracking-widest hover:bg-white/85 focus-visible outline-none transition-colors cursor-pointer"
+                className="w-full py-3 rounded-xl bg-[var(--sh-primary)] text-[var(--sh-on-primary)] font-mono text-sm uppercase tracking-widest hover:opacity-90 focus-visible outline-none transition-opacity cursor-pointer"
               >
                 Ingresar
               </button>
             </form>
 
             <div className="mt-6">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-white/35 mb-3 text-center">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)] mb-3 text-center">
                 Demo — seleccioná una inmobiliaria
               </p>
               <div className="grid grid-cols-3 gap-2">
@@ -121,8 +138,8 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
                     title={a.name}
                     className={`group p-2 rounded-xl border transition-all cursor-pointer ${
                       selectedAgency === a.id
-                        ? 'border-white/40 bg-white/10'
-                        : 'border-white/10 bg-white/[0.03] hover:border-white/25 hover:bg-white/[0.06]'
+                        ? 'border-[var(--sh-border-strong)] bg-[var(--sh-inset)]'
+                        : 'border-[var(--sh-border)] bg-[var(--sh-surface)] hover:border-[var(--sh-border-strong)] hover:bg-[var(--sh-inset)]'
                     }`}
                   >
                     <img
@@ -136,7 +153,7 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
             </div>
           </div>
 
-          <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-widest text-white/25">
+          <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)]">
             Desarrollado por Nodo Ético — Sistemas Inteligentes
           </p>
         </div>

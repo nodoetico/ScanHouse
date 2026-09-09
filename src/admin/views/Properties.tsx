@@ -29,7 +29,7 @@ export default function Properties({ onOpenExperience }: { onOpenExperience: (pr
             key={f}
             onClick={() => setFilter(f)}
             className={`px-3.5 py-1.5 rounded-full font-mono text-[11px] uppercase tracking-widest border transition-colors cursor-pointer ${
-              filter === f ? 'text-white bg-white/10 border-white/30' : 'text-white/50 border-white/10 hover:text-white/80'
+              filter === f ? 'text-[var(--sh-text)] bg-[var(--sh-inset)] border-[var(--sh-border-strong)]' : 'text-[var(--sh-muted)] border-[var(--sh-border)] hover:text-[var(--sh-text-soft)]'
             }`}
           >
             {statusLabel(f)} · {counts[f]}
@@ -48,53 +48,53 @@ export default function Properties({ onOpenExperience }: { onOpenExperience: (pr
               </div>
               <div className="absolute bottom-3 left-4 right-4 flex items-end justify-between gap-3">
                 <div>
-                  <h3 className="font-display text-white text-xl">{p.name}</h3>
-                  <p className="text-xs text-white/60 mt-0.5">{p.location}</p>
+                  <h3 className="font-display text-[var(--sh-text)] text-xl">{p.name}</h3>
+                  <p className="text-xs text-[var(--sh-text-soft)] mt-0.5">{p.location}</p>
                 </div>
-                <span className="font-mono text-sm text-white shrink-0">{formatMoney(p.price, p.currency)}</span>
+                <span className="font-mono text-sm text-[var(--sh-text)] shrink-0">{formatMoney(p.price, p.currency)}</span>
               </div>
             </div>
 
             <div className="p-4">
               <div className="grid grid-cols-3 gap-2 mb-4">
                 <div className="text-center">
-                  <div className="text-white font-display text-lg" style={{ color: agency.branding.primaryColor }}>{formatNumber(p.visitors)}</div>
-                  <div className="font-mono text-[9px] uppercase tracking-widest text-white/40">Visitantes</div>
+                  <div className="text-[var(--sh-text)] font-display text-lg" style={{ color: agency.branding.primaryColor }}>{formatNumber(p.visitors)}</div>
+                  <div className="font-mono text-[9px] uppercase tracking-widest text-[var(--sh-faint)]">Visitantes</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-white font-display text-lg">{p.leads}</div>
-                  <div className="font-mono text-[9px] uppercase tracking-widest text-white/40">Leads</div>
+                  <div className="text-[var(--sh-text)] font-display text-lg">{p.leads}</div>
+                  <div className="font-mono text-[9px] uppercase tracking-widest text-[var(--sh-faint)]">Leads</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-white font-display text-lg">{p.aiQuestions}</div>
-                  <div className="font-mono text-[9px] uppercase tracking-widest text-white/40">Consultas IA</div>
+                  <div className="text-[var(--sh-text)] font-display text-lg">{p.aiQuestions}</div>
+                  <div className="font-mono text-[9px] uppercase tracking-widest text-[var(--sh-faint)]">Consultas IA</div>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-2">
-                {p.bedrooms > 0 && <Badge accent="#ffffff" subtle={false}><span className="text-black">{p.bedrooms} dorm.</span></Badge>}
-                {p.bathrooms > 0 && <Badge accent="#ffffff" subtle={false}><span className="text-black">{p.bathrooms} baño{p.bathrooms > 1 ? 's' : ''}</span></Badge>}
-                {p.coveredArea > 0 && <Badge accent="#ffffff" subtle={false}><span className="text-black">{p.coveredArea} m²</span></Badge>}
+                {p.bedrooms > 0 && <Badge accent="#ffffff" subtle={false}><span className="text-[var(--sh-on-primary)]">{p.bedrooms} dorm.</span></Badge>}
+                {p.bathrooms > 0 && <Badge accent="#ffffff" subtle={false}><span className="text-[var(--sh-on-primary)]">{p.bathrooms} baño{p.bathrooms > 1 ? 's' : ''}</span></Badge>}
+                {p.coveredArea > 0 && <Badge accent="#ffffff" subtle={false}><span className="text-[var(--sh-on-primary)]">{p.coveredArea} m²</span></Badge>}
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-white/5">
+              <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-[var(--sh-border-soft)]">
                 <button
                   onClick={() => setSelected(selected === p.id ? null : p.id)}
-                  className="px-3 py-1.5 rounded-lg border border-white/15 text-xs text-white/80 hover:bg-white/5 transition-colors cursor-pointer flex-1 min-w-[100px]"
+                  className="px-3 py-1.5 rounded-lg border border-[var(--sh-border)] text-xs text-[var(--sh-text)] hover:bg-[var(--sh-inset)] transition-colors cursor-pointer flex-1 min-w-[100px]"
                 >
                   {selected === p.id ? 'Ocultar detalle' : 'Ver'}
                 </button>
                 <button
                   onClick={() => onOpenExperience(p.id)}
-                  className="px-3 py-1.5 rounded-lg text-xs text-black transition-colors cursor-pointer flex-1 min-w-[100px] font-medium"
+                  className="px-3 py-1.5 rounded-lg text-xs text-[var(--sh-on-primary)] transition-colors cursor-pointer flex-1 min-w-[100px] font-medium"
                   style={{ background: agency.branding.primaryColor }}
                 >
                   Ver experiencia
                 </button>
-                <button className="px-3 py-1.5 rounded-lg border border-white/15 text-xs text-white/80 hover:bg-white/5 transition-colors cursor-pointer flex-1 min-w-[100px]">
+                <button className="px-3 py-1.5 rounded-lg border border-[var(--sh-border)] text-xs text-[var(--sh-text)] hover:bg-[var(--sh-inset)] transition-colors cursor-pointer flex-1 min-w-[100px]">
                   Analizar
                 </button>
-                <button className="px-3 py-1.5 rounded-lg border border-white/15 text-xs text-white/80 hover:bg-white/5 transition-colors cursor-pointer flex-1 min-w-[100px]">
+                <button className="px-3 py-1.5 rounded-lg border border-[var(--sh-border)] text-xs text-[var(--sh-text)] hover:bg-[var(--sh-inset)] transition-colors cursor-pointer flex-1 min-w-[100px]">
                   Editar
                 </button>
               </div>
@@ -107,12 +107,12 @@ export default function Properties({ onOpenExperience }: { onOpenExperience: (pr
         <div className="mt-6">
           {agency.properties.filter(p => p.id === selected).map(p => (
             <Card key={p.id} className="p-5">
-              <h4 className="font-display text-white mb-3">Detalle — {p.name}</h4>
+              <h4 className="font-display text-[var(--sh-text)] mb-3">Detalle — {p.name}</h4>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                <div><span className="text-white/40 block font-mono text-[10px] uppercase tracking-widest">Tiempo promedio</span><span className="text-white">{p.avgTime}</span></div>
-                <div><span className="text-white/40 block font-mono text-[10px] uppercase tracking-widest">Interacciones</span><span className="text-white">{formatNumber(p.interactions)}</span></div>
-                <div><span className="text-white/40 block font-mono text-[10px] uppercase tracking-widest">Visitas</span><span className="text-white">{p.visits} ({p.confirmedVisits} confirmadas)</span></div>
-                <div><span className="text-white/40 block font-mono text-[10px] uppercase tracking-widest">WhatsApp</span><span className="text-white">{p.whatsappContacts} contactos</span></div>
+                <div><span className="text-[var(--sh-faint)] block font-mono text-[10px] uppercase tracking-widest">Tiempo promedio</span><span className="text-[var(--sh-text)]">{p.avgTime}</span></div>
+                <div><span className="text-[var(--sh-faint)] block font-mono text-[10px] uppercase tracking-widest">Interacciones</span><span className="text-[var(--sh-text)]">{formatNumber(p.interactions)}</span></div>
+                <div><span className="text-[var(--sh-faint)] block font-mono text-[10px] uppercase tracking-widest">Visitas</span><span className="text-[var(--sh-text)]">{p.visits} ({p.confirmedVisits} confirmadas)</span></div>
+                <div><span className="text-[var(--sh-faint)] block font-mono text-[10px] uppercase tracking-widest">WhatsApp</span><span className="text-[var(--sh-text)]">{p.whatsappContacts} contactos</span></div>
               </div>
             </Card>
           ))}

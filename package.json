@@ -11,6 +11,7 @@
     "generate:panoramas": "node scripts/generate-panoramas.mjs",
     "test:smoke": "node scripts/smoke.mjs",
     "test:panel": "node scripts/check-panel.mjs",
+    "test:themes": "node scripts/verify-themes.mjs",
     "fetch:real": "node scripts/fetch-real-panoramas.mjs"
   },
   "dependencies": {
