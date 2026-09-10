@@ -2,9 +2,9 @@
 @import "./styles/globals.css";
 
 @theme {
-  --font-display: 'Marcellus', serif;
+  --font-display: 'Saira', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
-  --font-sans: 'Inter', sans-serif;
+  --font-sans: 'Saira', sans-serif;
 }
 
 @layer base {
