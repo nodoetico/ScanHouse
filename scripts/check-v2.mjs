@@ -15,22 +15,35 @@ const click = txt => page.evaluate(t => {
   return false;
 }, txt);
 const bodyHas = txt => page.evaluate(t => document.body.textContent.includes(t), txt);
+const typeLogin = async (email, pass) => {
+  await page.type('input[type=email]', email);
+  await page.type('input[type=password]', pass);
+  await click('Ingresar');
+  await delays(1100);
+};
 
 await page.goto('http://localhost:5199', { waitUntil: 'networkidle2', timeout: 30000 });
 await delays(1600);
 
-report(await bodyHas('¿Qué querés explorar?'), 'Selector de demo visible (landing)');
-report(await bodyHas('EXPERIENCIA DEL CLIENTE'), 'Card de experiencia del cliente');
+report(await bodyHas('Panel de gestión'), 'Login único es la pantalla inicial');
+report(await page.evaluate(() => !!document.querySelector('input[type=email]') && !!document.querySelector('input[type=password]')), 'Formulario de credenciales presente');
+report(!(await bodyHas('EXPERIENCIA DEL CLIENTE')), 'No existe selector público de experiencia');
 
-report(await click('EXPLORAR'), 'Botón EXPLORAR presente');
-await delays(1100);
-report(await bodyHas('ENCONTRÁ TU PRÓXIMO'), 'Catálogo público visible');
-report(await bodyHas('Casa Laureles'), 'Catálogo Roca: Casa Laureles');
+await typeLogin('incorrecto@scanhouse.demo', 'x');
+report(await bodyHas('Credenciales incorrectas'), 'Credenciales inválidas rechazadas');
 
-report(await click('Leona'), 'Cambio a agencia Leona');
+await page.reload({ waitUntil: 'networkidle2' });
+await delays(1200);
+await typeLogin('roca@scanhouse.demo', 'demo123');
+report(await bodyHas('Inicio'), 'Login Roca: panel cargado');
+report(await bodyHas('Roca Inmobiliaria'), 'Branding Roca en panel');
+
+report(await click('Demo del cliente'), 'Abrir demo del cliente desde el panel');
 await delays(900);
-report(await bodyHas('Casona Los Gardens'), 'Catálogo Leona: Casona Los Gardens');
-report(!(await bodyHas('Casa Laureles')), 'Datos no mezclados entre agencias');
+report(await bodyHas('ENCONTRÁ TU PRÓXIMO'), 'Catálogo del cliente visible');
+report(await bodyHas('Casa Laureles'), 'Catálogo Roca: Casa Laureles');
+report(!(await bodyHas('Casona Los Gardens')), 'Privacidad: no muestra propiedades de Leona');
+report(!(await bodyHas('Leona')), 'Privacidad: sin selector de otras inmobiliarias');
 
 const compareButtons = await page.evaluate(() =>
   Array.from(document.querySelectorAll('button')).filter(b => b.textContent.trim() === '+ COMPARAR').length,
@@ -51,7 +64,7 @@ report(await click('← Volver'), 'Volver del comparador');
 await delays(600);
 report(await bodyHas('ENCONTRÁ TU PRÓXIMO'), 'De vuelta al catálogo');
 
-report(await click('VER PROPIEDAD'), 'Abrir publicación de Casona');
+report(await click('VER PROPIEDAD'), 'Abrir publicación de Casa Laureles');
 await delays(800);
 report(await bodyHas('CONOCÉ EL ENTORNO'), 'Publicación: entorno visible');
 report(await bodyHas('TAMBIÉN PODRÍA INTERESARTE'), 'Publicación: propiedades similares');
@@ -76,9 +89,14 @@ report(await click('ENCONTRAR PROPIEDADES'), 'Ejecutar recomendación');
 await delays(500);
 report(await bodyHas('Estas propiedades podrían interesarte'), 'Recomendación: resultados');
 
-report(await click('↺ Seleccionar demo'), 'Volver al selector de demo');
+report(await click('← Panel'), 'Volver al panel desde el catálogo');
 await delays(600);
-report(await bodyHas('¿Qué querés explorar?'), 'Selector de demo nuevamente');
+report(await bodyHas('Inicio'), 'Panel nuevamente');
+
+report(await click('Cerrar sesión'), 'Cerrar sesión');
+await delays(800);
+report(await bodyHas('Panel de gestión'), 'Volver al login único');
+report(!(await bodyHas('Inicio')), 'Datos del panel no quedan expuestos tras logout');
 
 report(errors.length === 0, 'Sin page errors', errors.join(' | '));
 console.log(`\n${results.filter(Boolean).length}/${results.length} OK`);

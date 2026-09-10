@@ -1,35 +1,12 @@
 import { useState } from 'react';
 import { agencies } from '../data/agencies';
-import type { Agency, AgencyId } from '../types/agency';
 import { useSession } from '../context/SessionContext';
-import { panelTokens } from './theme';
 
-const DEFAULT_BRAND: Agency['branding'] = {
-  primaryColor: '#ffffff',
-  secondaryColor: '#0a0a0a',
-  tertiaryColor: '#1f2937',
-  backgroundColor: '#050506',
-  textColor: '#ffffff',
-  accentColor: '#ffffff',
-};
-
-export default function Login({ onLogin, onBack }: { onLogin?: () => void; onBack?: () => void }) {
+export default function Login({ onLogin }: { onLogin?: () => void }) {
   const { login } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [selectedAgency, setSelectedAgency] = useState<AgencyId | null>(null);
-
-  const selected = agencies.find(a => a.id === selectedAgency);
-
-  const chooseAgency = (id: AgencyId) => {
-    const agency = agencies.find(a => a.id === id);
-    if (!agency) return;
-    setSelectedAgency(id);
-    setEmail(agency.credentials.email);
-    setPassword(agency.credentials.password);
-    setError('');
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,55 +15,50 @@ export default function Login({ onLogin, onBack }: { onLogin?: () => void; onBac
       setError('Credenciales incorrectas. Probá con una cuenta de demo de abajo.');
       return;
     }
+    setError('');
     onLogin?.();
   };
 
-  const tokens = selected ? panelTokens(selected.branding) : panelTokens(DEFAULT_BRAND);
-  const tint = selected ? selected.branding.primaryColor : 'rgba(255,255,255,0.08)';
+  const fillAccount = (demoEmail: string, demoPassword: string) => {
+    setEmail(demoEmail);
+    setPassword(demoPassword);
+    setError('');
+  };
 
   return (
-    <div className="fixed inset-0 bg-[var(--sh-bg)] text-[var(--sh-text)] overflow-y-auto" style={tokens as React.CSSProperties}>
+    <div className="fixed inset-0 bg-black text-white overflow-y-auto">
       <div
         className="fixed inset-0 pointer-events-none"
-        style={{ background: `radial-gradient(900px 500px at 50% 0%, ${tint}26, transparent 65%)` }}
+        style={{ background: 'radial-gradient(900px 500px at 50% 0%, rgba(255,255,255,0.06), transparent 65%)' }}
         aria-hidden="true"
       />
       <div className="relative min-h-full flex flex-col items-center justify-center px-6 py-10">
         <div className="w-full max-w-md">
           <div className="flex items-center justify-center gap-3 mb-8">
-            <div className="w-12 h-12 rounded-2xl bg-[var(--sh-surface-2)] border border-[var(--sh-border)] flex items-center justify-center font-display text-xl text-[var(--sh-text)]">
+            <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center font-display text-xl text-white">
               SH
             </div>
             <div>
-              <div className="font-display text-xl tracking-wide text-[var(--sh-text)]">SCANHOUSE</div>
-              <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--sh-muted)]">
+              <div className="font-display text-xl tracking-wide text-white">SCANHOUSE</div>
+              <div className="font-mono text-[10px] uppercase tracking-widest text-white/50">
                 Experiencias inmobiliarias inteligentes
               </div>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--sh-border)] bg-[var(--sh-surface)] backdrop-blur-md p-6 sm:p-8">
+          <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-6 sm:p-8">
             <div className="flex flex-col items-center mb-6">
-              {selected ? (
-                <img
-                  src={selected.logo}
-                  alt={selected.name}
-                  className="h-12 w-auto max-w-[220px] object-contain mb-3"
-                />
-              ) : (
-                <div className="h-12 w-12 rounded-full bg-[var(--sh-surface-2)] border border-[var(--sh-border)] mb-3" />
-              )}
-              <h1 className="font-display text-xl tracking-tight text-[var(--sh-text)] text-center">
-                {selected ? selected.name : 'Panel de gestión'}
+              <h1 className="font-display text-xl tracking-tight text-white text-center">
+                Panel de gestión
               </h1>
-              <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--sh-muted)] mt-1">
-                {selected ? 'Panel de gestión' : 'Ingresá tus credenciales'}
+              <p className="font-mono text-[10px] uppercase tracking-widest text-white/40 mt-1">
+                Ingresá las credenciales de tu inmobiliaria
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div>
-                <label className="block font-mono text-[10px] uppercase tracking-widest text-[var(--sh-muted)] mb-1.5">
+                <label className="block font-mono text-[10px] uppercase tracking-widest text-white/50 mb-1.5">
                   Usuario
                 </label>
                 <input
@@ -95,11 +67,11 @@ export default function Login({ onLogin, onBack }: { onLogin?: () => void; onBac
                   onChange={e => setEmail(e.target.value)}
                   placeholder="usuario@inmobiliaria.com"
                   autoComplete="username"
-                  className="w-full px-4 py-3 rounded-xl bg-[var(--sh-surface-2)] border border-[var(--sh-border)] text-[var(--sh-text)] text-base sm:text-sm outline-none focus:border-[var(--sh-border-strong)] transition-colors placeholder:text-[var(--sh-faint)]"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-base sm:text-sm outline-none focus:border-white/30 transition-colors placeholder:text-white/30"
                 />
               </div>
               <div>
-                <label className="block font-mono text-[10px] uppercase tracking-widest text-[var(--sh-muted)] mb-1.5">
+                <label className="block font-mono text-[10px] uppercase tracking-widest text-white/50 mb-1.5">
                   Contraseña
                 </label>
                 <input
@@ -108,7 +80,7 @@ export default function Login({ onLogin, onBack }: { onLogin?: () => void; onBac
                   onChange={e => setPassword(e.target.value)}
                   placeholder="••••••••"
                   autoComplete="current-password"
-                  className="w-full px-4 py-3 rounded-xl bg-[var(--sh-surface-2)] border border-[var(--sh-border)] text-[var(--sh-text)] text-base sm:text-sm outline-none focus:border-[var(--sh-border-strong)] transition-colors placeholder:text-[var(--sh-faint)]"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-base sm:text-sm outline-none focus:border-white/30 transition-colors placeholder:text-white/30"
                 />
               </div>
 
@@ -120,49 +92,42 @@ export default function Login({ onLogin, onBack }: { onLogin?: () => void; onBac
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl bg-[var(--sh-primary)] text-[var(--sh-on-primary)] font-mono text-sm uppercase tracking-widest hover:opacity-90 focus-visible outline-none transition-opacity cursor-pointer"
+                className="w-full py-3 rounded-xl bg-white text-black font-mono text-sm uppercase tracking-widest hover:opacity-90 transition-opacity cursor-pointer"
               >
                 Ingresar
               </button>
             </form>
 
             <div className="mt-6">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)] mb-3 text-center">
-                Demo — seleccioná una inmobiliaria
+              <p className="font-mono text-[10px] uppercase tracking-widest text-white/30 mb-3 text-center">
+                Cuentas demo — acá inicia la experiencia privada de cada inmobiliaria
               </p>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="flex flex-col gap-2">
                 {agencies.map(a => (
                   <button
                     key={a.id}
-                    onClick={() => chooseAgency(a.id)}
-                    title={a.name}
-                    className={`group p-2 rounded-xl border transition-all cursor-pointer ${
-                      selectedAgency === a.id
-                        ? 'border-[var(--sh-border-strong)] bg-[var(--sh-inset)]'
-                        : 'border-[var(--sh-border)] bg-[var(--sh-surface)] hover:border-[var(--sh-border-strong)] hover:bg-[var(--sh-inset)]'
-                    }`}
+                    onClick={() => fillAccount(a.credentials.email, a.credentials.password)}
+                    className="flex items-center gap-3 p-2.5 rounded-xl border border-white/10 bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.05] transition-all cursor-pointer text-left"
                   >
-                    <img
-                      src={a.logo}
-                      alt={a.name}
-                      className="h-6 w-full object-contain opacity-80 group-hover:opacity-100 transition-opacity"
-                    />
+                    <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center bg-white/5">
+                      {a.logo ? (
+                        <img src={a.logo} alt={a.name} className="max-h-full max-w-full object-contain p-0.5" />
+                      ) : (
+                        <span className="font-display text-white/70 text-xs">{a.shortName[0]}</span>
+                      )}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-display text-sm text-white truncate">{a.name}</p>
+                      <p className="font-mono text-[10px] text-white/40 truncate">{a.credentials.email}</p>
+                    </div>
+                    <span className="font-mono text-[9px] uppercase tracking-widest text-white/30 shrink-0">Usar</span>
                   </button>
                 ))}
               </div>
             </div>
           </div>
 
-          {onBack && (
-            <button
-              onClick={onBack}
-              className="mt-5 w-full py-2.5 rounded-xl border border-[var(--sh-border)] text-[var(--sh-muted)] font-mono text-[10px] uppercase tracking-widest hover:text-[var(--sh-text)] hover:border-[var(--sh-border-strong)] transition-colors cursor-pointer"
-            >
-              ← Volver a elegir demo
-            </button>
-          )}
-
-          <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)]">
+          <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-widest text-white/30">
             Desarrollado por Nodo Ético — Sistemas Inteligentes
           </p>
         </div>

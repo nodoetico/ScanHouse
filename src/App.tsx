@@ -1,12 +1,10 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { SessionProvider, useSession } from './context/SessionContext';
-import { getAgencyById } from './data/agencies';
 import { getListing, listingsForAgency } from './data/listings';
 import { buildExperience } from './data/buildExperience';
 import { panelTokens } from './admin/theme';
 import { pushLiveEvent } from './data/liveActivity';
 import type { ListingProperty } from './types/listing';
-import DemoPicker from './public/DemoPicker';
 import PublicCatalog from './public/PublicCatalog';
 import PublicProperty from './public/PublicProperty';
 import CompareBar from './public/CompareBar';
@@ -21,20 +19,17 @@ import Login from './admin/Login';
 import Panel from './admin/Panel';
 
 type View =
-  | 'picker'
+  | 'login'
+  | 'panel'
   | 'catalog'
   | 'property'
   | 'tour'
   | 'compare'
-  | 'final'
-  | 'login'
-  | 'panel';
-type AgencyId = Parameters<typeof getAgencyById>[0];
+  | 'final';
 
 function AppShell() {
-  const { agency, logout } = useSession();
-  const [view, setView] = useState<View>('picker');
-  const [publicAgencyId, setPublicAgencyId] = useState<AgencyId>('roca');
+  const { agency } = useSession();
+  const [view, setView] = useState<View>('login');
   const [selectedListingId, setSelectedListingId] = useState<string | null>(null);
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [fromPanel, setFromPanel] = useState(false);
@@ -44,8 +39,7 @@ function AppShell() {
   const [showFloorPlan, setShowFloorPlan] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const publicAgency = getAgencyById(publicAgencyId);
-  const agencyListings = useMemo(() => listingsForAgency(publicAgencyId), [publicAgencyId]);
+  const agencyListings = useMemo(() => (agency ? listingsForAgency(agency.id) : []), [agency]);
   const listing = selectedListingId ? getListing(selectedListingId) : undefined;
   const experience = useMemo(() => (listing ? buildExperience(listing) : null), [listing]);
   const compareListings = compareIds
@@ -90,23 +84,19 @@ function AppShell() {
     }
   }, [experience, currentSceneIndex]);
 
-  const handleExitDemo = useCallback(() => {
-    logout();
-    setFromPanel(false);
-    setView('picker');
-  }, [logout]);
+  useEffect(() => {
+    if (!agency) setView('login');
+  }, [agency]);
 
-  const handleEnterClient = useCallback(() => {
-    setPublicAgencyId('roca');
-    setFromPanel(false);
-    setView('catalog');
-  }, []);
-
-  const handleChangeAgency = useCallback((id: AgencyId) => {
-    setPublicAgencyId(id);
+  const handleOpenClientDemo = useCallback(() => {
+    setFromPanel(true);
     setCompareIds([]);
     setSelectedListingId(null);
     setView('catalog');
+  }, []);
+
+  const handleBackToPanel = useCallback(() => {
+    setView('panel');
   }, []);
 
   const handleSelectListing = useCallback(
@@ -179,11 +169,6 @@ function AppShell() {
     setView('tour');
   }, []);
 
-  const handleOpenLogin = useCallback(() => {
-    setFromPanel(false);
-    setView('login');
-  }, []);
-
   const handleOpenExperience = useCallback((propertyId: string) => {
     const l = getListing(propertyId);
     setSelectedListingId(propertyId);
@@ -196,10 +181,6 @@ function AppShell() {
     if (l) pushLiveEvent(l.agencyId, l.name, 'tour-360');
   }, []);
 
-  const handleBackToPanel = useCallback(() => {
-    setView('panel');
-  }, []);
-
   const handleBackFromCompare = useCallback(() => {
     setView(selectedListingId && listing ? 'property' : 'catalog');
   }, [selectedListingId, listing]);
@@ -208,33 +189,32 @@ function AppShell() {
 
   return (
     <div className="fixed inset-0 overflow-hidden">
-      {view === 'picker' && <DemoPicker onClient={handleEnterClient} onAgency={handleOpenLogin} />}
+      {view === 'login' && !agency && <Login onLogin={() => setView('panel')} />}
 
-      {view === 'login' && <Login onLogin={() => setView('panel')} onBack={() => setView('picker')} />}
+      {view === 'panel' && !agency && <Login onLogin={() => setView('panel')} />}
 
-      {view === 'panel' && agency && <Panel onOpenExperience={handleOpenExperience} onExitDemo={handleExitDemo} />}
+      {view === 'panel' && agency && (
+        <Panel onOpenExperience={handleOpenExperience} onOpenClientDemo={handleOpenClientDemo} />
+      )}
 
-      {view === 'panel' && !agency && <Login onLogin={() => setView('panel')} onBack={() => setView('picker')} />}
-
-      {view === 'catalog' && publicAgency && (
-        <div className="absolute inset-0 overflow-y-auto" style={panelTokens(publicAgency.branding)}>
+      {view === 'catalog' && agency && (
+        <div className="absolute inset-0 overflow-y-auto" style={panelTokens(agency.branding)}>
           <PublicCatalog
-            agency={publicAgency}
+            agency={agency}
             listings={agencyListings}
             compareIds={compareIds}
             onToggleCompare={toggleCompare}
             onSelect={handleSelectListing}
-            onChangeAgency={handleChangeAgency}
-            onExitDemo={handleExitDemo}
+            onBackToPanel={handleBackToPanel}
           />
           <CompareBar items={compareListings} onRemove={removeCompare} onClear={clearCompare} onOpenCompare={openCompare} />
         </div>
       )}
 
-      {view === 'property' && listing && publicAgency && (
-        <div className="absolute inset-0 overflow-y-auto" style={panelTokens(publicAgency.branding)}>
+      {view === 'property' && listing && agency && (
+        <div className="absolute inset-0 overflow-y-auto" style={panelTokens(agency.branding)}>
           <PublicProperty
-            agency={publicAgency}
+            agency={agency}
             listing={listing}
             compareIds={compareIds}
             onToggleCompare={toggleCompare}
@@ -244,19 +224,19 @@ function AppShell() {
             onRequestVisit={handleRequestVisit}
             onSelect={handleSelectListing}
             onBackToList={() => setView('catalog')}
-            onExitDemo={handleExitDemo}
+            onBackToPanel={handleBackToPanel}
           />
           <CompareBar items={compareListings} onRemove={removeCompare} onClear={clearCompare} onOpenCompare={openCompare} elevatedOnMobile />
         </div>
       )}
 
-      {view === 'compare' && publicAgency && compareListings.length >= 2 && (
-        <div className="absolute inset-0 overflow-y-auto" style={panelTokens(publicAgency.branding)}>
+      {view === 'compare' && agency && compareListings.length >= 2 && (
+        <div className="absolute inset-0 overflow-y-auto" style={panelTokens(agency.branding)}>
           <CompareView items={compareListings} onSelect={handleSelectListing} onBack={handleBackFromCompare} />
         </div>
       )}
 
-      {(view === 'tour' || view === 'final') && experience && currentScene && (
+      {(view === 'tour' || view === 'final') && agency && experience && currentScene && (
         <div
           className={`absolute inset-0 transition-opacity duration-500 ${view === 'tour' || view === 'final' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         >

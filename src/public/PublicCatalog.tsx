@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
-import type { Agency, AgencyId } from '../types/agency';
+import type { Agency } from '../types/agency';
 import type { ListingProperty, PropertyType } from '../types/listing';
-import { agencies } from '../data/agencies';
 import PropertyCard from '../components/PropertyCard';
 
 type Mode = 'todas' | 'venta' | 'alquiler';
@@ -14,8 +13,7 @@ interface PublicCatalogProps {
   compareIds: string[];
   onToggleCompare: (id: string) => void;
   onSelect: (id: string) => void;
-  onChangeAgency: (id: AgencyId) => void;
-  onExitDemo: () => void;
+  onBackToPanel: () => void;
 }
 
 const types: ('todos' | PropertyType)[] = ['todos', 'casa', 'departamento', 'ph', 'loft', 'terreno', 'duplex'];
@@ -54,8 +52,7 @@ export default function PublicCatalog({
   compareIds,
   onToggleCompare,
   onSelect,
-  onChangeAgency,
-  onExitDemo,
+  onBackToPanel,
 }: PublicCatalogProps) {
   const [mode, setMode] = useState<Mode>('todas');
   const [type, setType] = useState<string>('todos');
@@ -125,10 +122,10 @@ export default function PublicCatalog({
             </div>
           </div>
           <button
-            onClick={onExitDemo}
+            onClick={onBackToPanel}
             className="px-3.5 py-1.5 rounded-full font-mono text-[10px] uppercase tracking-widest border border-[var(--sh-border-strong)] text-[var(--sh-faint)] hover:text-[var(--sh-text)] hover:border-[var(--sh-primary)] transition-colors cursor-pointer shrink-0"
           >
-            ↺ Seleccionar demo
+            ← Panel
           </button>
         </header>
 
@@ -143,23 +140,6 @@ export default function PublicCatalog({
             Recorré cada propiedad en 360°, conocé el barrio, compará opciones y contactanos cuando quieras.
           </p>
         </section>
-
-        <div className="mb-6 flex flex-wrap gap-2 items-center">
-          {agencies.map(a => (
-            <button
-              key={a.id}
-              onClick={() => onChangeAgency(a.id)}
-              className={`px-3 py-1.5 rounded-full font-mono text-[10px] uppercase tracking-widest border transition-colors cursor-pointer ${
-                a.id === agency.id
-                  ? 'text-[var(--sh-on-primary)] border-transparent'
-                  : 'border-[var(--sh-border)] text-[var(--sh-muted)] hover:text-[var(--sh-text)] hover:border-[var(--sh-border-strong)]'
-              }`}
-              style={a.id === agency.id ? { background: 'var(--sh-primary)' } : undefined}
-            >
-              {a.shortName}
-            </button>
-          ))}
-        </div>
 
         <div className="rounded-2xl border border-[var(--sh-border)] bg-[var(--sh-surface-2)] p-3 sm:p-4 mb-8">
           <div className="flex flex-col lg:flex-row lg:flex-wrap lg:items-center gap-3">

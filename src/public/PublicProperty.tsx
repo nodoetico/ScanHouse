@@ -15,7 +15,7 @@ interface PublicPropertyProps {
   onRequestVisit: () => void;
   onSelect: (id: string) => void;
   onBackToList: () => void;
-  onExitDemo: () => void;
+  onBackToPanel: () => void;
 }
 
 export default function PublicProperty({
@@ -29,7 +29,7 @@ export default function PublicProperty({
   onRequestVisit,
   onSelect,
   onBackToList,
-  onExitDemo,
+  onBackToPanel,
 }: PublicPropertyProps) {
   const similar = similarToListing(listing, 3).filter(l => l.agencyId === agency.id).slice(0, 3);
 
@@ -69,10 +69,10 @@ export default function PublicProperty({
               Powered by ScanHouse
             </span>
             <button
-              onClick={onExitDemo}
+              onClick={onBackToPanel}
               className="px-3.5 py-1.5 rounded-full font-mono text-[10px] uppercase tracking-widest border border-[var(--sh-border-strong)] text-[var(--sh-faint)] hover:text-[var(--sh-text)] hover:border-[var(--sh-primary)] transition-colors cursor-pointer"
             >
-              ↺ Seleccionar demo
+              ← Panel
             </button>
           </div>
         </div>

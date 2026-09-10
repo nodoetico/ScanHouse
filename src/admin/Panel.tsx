@@ -31,7 +31,7 @@ const nav: { id: View; label: string; icon: string; badge?: string }[] = [
   { id: 'settings', label: 'Configuración', icon: '⚙' },
 ];
 
-export default function Panel({ onOpenExperience, onExitDemo }: { onOpenExperience: (propertyId: string) => void; onExitDemo: () => void }) {
+export default function Panel({ onOpenExperience, onOpenClientDemo }: { onOpenExperience: (propertyId: string) => void; onOpenClientDemo: () => void }) {
   const { agency, logout } = useSession();
   const [view, setView] = useState<View>('dashboard');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -103,11 +103,11 @@ export default function Panel({ onOpenExperience, onExitDemo }: { onOpenExperien
 
         <div className="p-3 border-t border-[var(--sh-border)] flex flex-col gap-1">
           <button
-            onClick={onExitDemo}
+            onClick={onOpenClientDemo}
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-[var(--sh-muted)] hover:text-[var(--sh-text)] hover:bg-[var(--sh-inset)] transition-colors cursor-pointer"
           >
-            <span className="w-5 text-center">↺</span>
-            <span>Volver al selector de demo</span>
+            <span className="w-5 text-center">▶</span>
+            <span>Demo del cliente</span>
           </button>
           <button
             onClick={logout}
@@ -149,6 +149,12 @@ export default function Panel({ onOpenExperience, onExitDemo }: { onOpenExperien
               {agency.contact.domain ?? agency.name}
             </span>
 <button
+            onClick={onOpenClientDemo}
+            className="px-3.5 py-1.5 rounded-lg border border-[var(--sh-border-strong)] text-xs text-[var(--sh-text)] font-medium hover:bg-[var(--sh-inset)] transition-colors cursor-pointer"
+          >
+            Demo del cliente
+          </button>
+          <button
             onClick={() => firstActive && onOpenExperience(firstActive)}
             disabled={!firstActive}
             className="px-3.5 py-1.5 rounded-lg text-xs text-[var(--sh-on-primary)] font-medium transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"

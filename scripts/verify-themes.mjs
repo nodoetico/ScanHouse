@@ -13,14 +13,15 @@ const agencies = ['Roca', 'Remax', 'Leona', 'Emilia', 'Navarro', 'Agostini'];
 
 await page.goto('http://localhost:5199', { waitUntil: 'networkidle2', timeout: 30000 });
 await delays(1600);
-await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('INGRESAR'))?.click());
-await delays(800);
 
 const themes = [];
 for (const name of agencies) {
-  await page.evaluate(n => Array.from(document.querySelectorAll('button')).find(b => b.title?.includes(n))?.click(), name);
+  await page.evaluate(n => {
+    const b = Array.from(document.querySelectorAll('button')).find(x => (x.textContent || '').includes(n));
+    b?.click();
+  }, name);
   await delays(350);
-  const loginBg = await page.evaluate(() => getComputedStyle(document.querySelector('div[class*="--sh-bg"]')).backgroundColor);
+  const loginBg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.trim() === 'Ingresar')?.click());
   await delays(1100);
   const panel = await page.evaluate(() => {

@@ -8,58 +8,55 @@ page.on('pageerror', e => errors.push(String(e)));
 const delays = ms => new Promise(r => setTimeout(r, ms));
 const results = [];
 const report = (ok, name, detail = '') => { results.push(ok); console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? ' — ' + detail : ''}`); };
+const bodyHas = txt => page.evaluate(t => document.body.textContent.includes(t), txt);
+const click = txt => page.evaluate(t => {
+  const els = Array.from(document.querySelectorAll('button, a'));
+  const b = els.find(e => (e.textContent || '').trim().includes(t));
+  if (b) { b.click(); return true; }
+  return false;
+}, txt);
 
 await page.goto('http://localhost:5199', { waitUntil: 'networkidle2', timeout: 30000 });
 await delays(1600);
-report(await page.evaluate(() => document.body.textContent.includes('¿Qué querés explorar?')), 'Selector de demo visible (landing)');
+report(await bodyHas('Panel de gestión'), 'Login único visible (sin selector de agencia)');
 
-await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('INGRESAR'))?.click());
-await delays(800);
-report(await page.evaluate(() => document.body.textContent.includes('SCANHOUSE')), 'Login visible');
-
-await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.title?.includes('Navarro'))?.click());
-await delays(400);
-const creds = await page.evaluate(() => ({
-  email: document.querySelector('input[type=email]').value,
-  pass: document.querySelector('input[type=password]').value,
-  logoShown: !!document.querySelector('img[alt*="Navarro"]'),
-}));
-report(creds.email === 'navarro@scanhouse.demo' && creds.pass === 'demo123', 'Credenciales demo autocompletadas', JSON.stringify(creds));
-report(creds.logoShown, 'Logo de Navarro mostrado en login');
-
-await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.trim() === 'Ingresar')?.click());
+await page.type('input[type=email]', 'navarro@scanhouse.demo');
+await page.type('input[type=password]', 'demo123');
+await click('Ingresar');
 await delays(1200);
-report(await page.evaluate(() => document.body.textContent.includes('Navarro Inmobiliaria')), 'Dashboard cargado con branding Navarro');
-report(await page.evaluate(() => document.body.textContent.includes('Inicio')), 'Sidebar expuesto');
+report(await bodyHas('Navarro Inmobiliaria'), 'Dashboard cargado con branding Navarro');
+report(await bodyHas('Inicio'), 'Sidebar expuesto');
+report(await bodyHas('Demo del cliente'), 'Acceso a la demo del cliente desde el panel');
 
 await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.trim() === 'Propiedades')?.click());
 await delays(600);
-report(await page.evaluate(() => document.body.textContent.includes('Residencia El Parque')), 'Propiedades: lista de Navarro visible');
+report(await bodyHas('Residencia El Parque'), 'Propiedades: lista de Navarro visible');
+report(!(await bodyHas('Casa Laureles')), 'Privacidad: sin propiedades de Roca');
 
 await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Inteligencia'))?.click());
 await delays(600);
-const intel = await page.evaluate(() => document.body.textContent.includes('Preguntas frecuentes'));
+const intel = await bodyHas('Preguntas frecuentes');
 report(intel, 'Inteligencia visible');
 
 await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Leads'))?.click());
 await delays(600);
-report(await page.evaluate(() => document.body.textContent.includes('Ricardo Núñez')), 'Leads: datos de Navarro (no mezclados)');
+report(await bodyHas('Ricardo Núñez'), 'Leads: datos de Navarro (no mezclados)');
 
 await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Conversión'))?.click());
 await delays(600);
-report(await page.evaluate(() => document.body.textContent.includes('Métricas comerciales')), 'Conversión visible');
+report(await bodyHas('Métricas comerciales'), 'Conversión visible');
 
 await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Analíticas'))?.click());
 await delays(600);
-report(await page.evaluate(() => document.body.textContent.includes('Rendimiento integral')), 'Analíticas visible');
+report(await bodyHas('Rendimiento integral'), 'Analíticas visible');
 
 await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Configuración'))?.click());
 await delays(600);
-report(await page.evaluate(() => document.body.textContent.includes('Navarro Inmobiliaria') && document.body.textContent.includes('Dominio')), 'Configuración visible');
+report(await bodyHas('Dominio'), 'Configuración visible');
 
-await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Cerrar sesión'))?.click());
+await click('Cerrar sesión');
 await delays(800);
-report(await page.evaluate(() => document.body.textContent.includes('SCANHOUSE')), 'Logout regresa al login');
+report(await bodyHas('Panel de gestión'), 'Logout regresa al login');
 report(errors.length === 0, 'Sin page errors', errors.join(' | '));
 console.log(`\n${results.filter(Boolean).length}/${results.length} OK`);
 await browser.close();
