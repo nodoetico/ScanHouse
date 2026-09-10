@@ -15,6 +15,9 @@ interface TourControlsProps {
   setShowAssistant: (show: boolean) => void;
   showFloorPlan: boolean;
   setShowFloorPlan: (show: boolean) => void;
+  fromPanel?: boolean;
+  onBackToPanel?: () => void;
+  onBackToList?: () => void;
 }
 
 export default function TourControls({
@@ -32,6 +35,9 @@ export default function TourControls({
   setShowAssistant,
   showFloorPlan,
   setShowFloorPlan,
+  fromPanel,
+  onBackToPanel,
+  onBackToList,
 }: TourControlsProps) {
   const isFirst = currentSceneIndex === 0;
   const isLast = currentSceneIndex === totalScenes - 1;
@@ -39,17 +45,27 @@ export default function TourControls({
   return (
     <div className="fixed inset-0 pointer-events-none z-30" aria-hidden="true">
       <div className="fixed top-3 left-3 right-3 sm:top-6 sm:left-6 sm:right-6 flex items-start justify-between gap-3 pointer-events-auto">
-        <div className="flex items-center gap-3 px-3 py-2 sm:px-4 rounded-xl bg-black/35 backdrop-blur-md border border-white/20 shadow-lg shadow-black/20">
-          <span className="font-display text-lg sm:text-xl font-medium text-white">
-            {property.branding.name}
-          </span>
-          <span className="hidden md:block w-px h-6 bg-white/20" />
-          <span className="hidden md:inline font-mono text-xs uppercase tracking-widest text-white/70">
-            {currentScene.name}
-          </span>
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          {(fromPanel ? onBackToPanel : onBackToList) && (
+            <button
+              onClick={fromPanel ? onBackToPanel : onBackToList}
+              className="flex-shrink-0 px-3 py-2 rounded-xl bg-black/35 backdrop-blur-md border border-white/20 font-mono text-[11px] uppercase tracking-widest text-white/80 hover:bg-black/55 hover:border-white/40 transition-colors cursor-pointer"
+            >
+              {fromPanel ? '← Panel' : '← Publicación'}
+            </button>
+          )}
+          <div className="flex items-center gap-3 px-3 py-2 sm:px-4 rounded-xl bg-black/35 backdrop-blur-md border border-white/20 shadow-lg shadow-black/20 min-w-0">
+            <span className="font-display text-lg sm:text-xl font-medium text-white truncate">
+              {property.branding.name}
+            </span>
+            <span className="hidden md:block w-px h-6 bg-white/20 flex-shrink-0" />
+            <span className="hidden md:inline font-mono text-xs uppercase tracking-widest text-white/70 truncate">
+              {currentScene.name}
+            </span>
+          </div>
         </div>
 
-        <div className="flex items-center gap-1.5 sm:gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
           <ControlButton
             onClick={() => setShowInfo(!showInfo)}
             active={showInfo}

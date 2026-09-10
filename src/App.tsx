@@ -206,8 +206,6 @@ function AppShell() {
 
   const openCompare = useCallback(() => setView('compare'), []);
 
-  const showTourBack = view === 'tour' && experience;
-
   return (
     <div className="fixed inset-0 overflow-hidden">
       {view === 'picker' && <DemoPicker onClient={handleEnterClient} onAgency={handleOpenLogin} />}
@@ -278,6 +276,9 @@ function AppShell() {
                 showFloorPlan={showFloorPlan}
                 setShowFloorPlan={setShowFloorPlan}
                 onRequestVisit={handleRequestVisit}
+                fromPanel={fromPanel}
+                onBackToPanel={handleBackToPanel}
+                onBackToList={() => setView('property')}
               />
               <NavigationIndicator currentScene={currentScene} currentIndex={currentSceneIndex} />
               {showInfo && (
@@ -293,23 +294,6 @@ function AppShell() {
                   onNavigate={navigateToScene}
                   onClose={() => setShowFloorPlan(false)}
                 />
-              )}
-
-              {fromPanel && (
-                <button
-                  onClick={handleBackToPanel}
-                  className="absolute top-3 left-1/2 -translate-x-1/2 z-40 px-4 py-2 rounded-xl bg-black/60 border border-white/20 font-mono text-[11px] uppercase tracking-widest text-white/80 hover:bg-black hover:text-white transition-colors cursor-pointer pointer-events-auto"
-                >
-                  ← Volver al panel
-                </button>
-              )}
-              {showTourBack && !fromPanel && (
-                <button
-                  onClick={() => setView('property')}
-                  className="absolute top-3 left-3 z-40 px-4 py-2 rounded-xl bg-black/60 border border-white/20 font-mono text-[11px] uppercase tracking-widest text-white/80 hover:bg-black hover:text-white transition-colors cursor-pointer pointer-events-auto"
-                >
-                  ← Publicación
-                </button>
               )}
             </>
           )}

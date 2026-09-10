@@ -19,6 +19,9 @@ interface TourProps {
   setShowAssistant: (show: boolean) => void;
   showFloorPlan: boolean;
   setShowFloorPlan: (show: boolean) => void;
+  fromPanel?: boolean;
+  onBackToPanel?: () => void;
+  onBackToList?: () => void;
 }
 
 function createTooltip(hs: Hotspot): (el: HTMLElement) => void {
@@ -91,6 +94,9 @@ export default function Tour({
   setShowAssistant,
   showFloorPlan,
   setShowFloorPlan,
+  fromPanel,
+  onBackToPanel,
+  onBackToList,
 }: TourProps) {
   const viewerRef = useRef<HTMLDivElement>(null);
   const viewerInstance = useRef<Viewer | null>(null);
@@ -196,6 +202,9 @@ export default function Tour({
         setShowAssistant={setShowAssistant}
         showFloorPlan={showFloorPlan}
         setShowFloorPlan={setShowFloorPlan}
+        fromPanel={fromPanel}
+        onBackToPanel={onBackToPanel}
+        onBackToList={onBackToList}
       />
 
       {infoHotspot && (

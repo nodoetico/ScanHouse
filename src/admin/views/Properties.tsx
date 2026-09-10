@@ -72,9 +72,9 @@ export default function Properties({ onOpenExperience }: { onOpenExperience: (pr
               </div>
 
               <div className="flex flex-wrap gap-2">
-                {p.bedrooms > 0 && <Badge accent="#ffffff" subtle={false}><span className="text-[var(--sh-on-primary)]">{p.bedrooms} dorm.</span></Badge>}
-                {p.bathrooms > 0 && <Badge accent="#ffffff" subtle={false}><span className="text-[var(--sh-on-primary)]">{p.bathrooms} baño{p.bathrooms > 1 ? 's' : ''}</span></Badge>}
-                {p.coveredArea > 0 && <Badge accent="#ffffff" subtle={false}><span className="text-[var(--sh-on-primary)]">{p.coveredArea} m²</span></Badge>}
+                {p.bedrooms > 0 && <Badge accent="#ffffff">{p.bedrooms} dorm.</Badge>}
+                {p.bathrooms > 0 && <Badge accent="#ffffff">{p.bathrooms} baño{p.bathrooms > 1 ? 's' : ''}</Badge>}
+                {p.coveredArea > 0 && <Badge accent="#ffffff">{p.coveredArea} m²</Badge>}
               </div>
 
               <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-[var(--sh-border-soft)]">
