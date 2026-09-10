@@ -46,15 +46,16 @@ export default function PublicProperty({
   return (
     <div className="min-h-screen bg-[var(--sh-bg)] text-[var(--sh-text)] pb-24 sm:pb-0">
       <header className="sticky top-0 z-30 backdrop-blur-xl bg-[var(--sh-header)] border-b border-[var(--sh-border)]">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center gap-3">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center gap-3 sm:gap-4">
           <button
             onClick={onBackToList}
-            className="font-mono text-[11px] uppercase tracking-widest text-[var(--sh-faint)] hover:text-[var(--sh-text)] transition-colors cursor-pointer"
+            className="font-mono text-[11px] uppercase tracking-widest text-[var(--sh-faint)] hover:text-[var(--sh-text)] transition-colors cursor-pointer shrink-0"
           >
             ← Listado
           </button>
-          <div className="flex items-center gap-2 ml-2">
-            <div className="w-7 h-7 rounded-lg border border-[var(--sh-border)] bg-[var(--sh-surface-2)] flex items-center justify-center overflow-hidden">
+          <div className="hidden sm:block h-6 w-px bg-[var(--sh-border-strong)]/60" aria-hidden="true" />
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-8 h-8 rounded-lg border border-[var(--sh-border)] bg-[var(--sh-surface-2)] flex items-center justify-center overflow-hidden shrink-0">
               {agency.logo ? (
                 <img src={agency.logo} alt="" className="max-h-full max-w-full object-contain p-0.5" />
               ) : (
@@ -62,16 +63,18 @@ export default function PublicProperty({
               )}
             </div>
             <span className="font-display text-sm text-[var(--sh-text)] truncate">{agency.shortName}</span>
-            <span className="hidden md:inline font-mono text-[9px] uppercase tracking-widest text-[var(--sh-faint)]">
+          </div>
+          <div className="ml-auto flex items-center gap-3 sm:gap-4 shrink-0">
+            <span className="hidden lg:inline font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)]">
               Powered by ScanHouse
             </span>
+            <button
+              onClick={onExitDemo}
+              className="px-3.5 py-1.5 rounded-full font-mono text-[10px] uppercase tracking-widest border border-[var(--sh-border-strong)] text-[var(--sh-faint)] hover:text-[var(--sh-text)] hover:border-[var(--sh-primary)] transition-colors cursor-pointer"
+            >
+              ↺ Seleccionar demo
+            </button>
           </div>
-          <button
-            onClick={onExitDemo}
-            className="ml-auto font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)] hover:text-[var(--sh-text)] transition-colors cursor-pointer"
-          >
-            ↺ Seleccionar demo
-          </button>
         </div>
       </header>
 

@@ -69,14 +69,14 @@ export default function CompareView({ items, onSelect, onBack }: CompareViewProp
 
         <div className="rounded-2xl border border-[var(--sh-border)] bg-[var(--sh-surface-2)] overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[560px] text-sm">
+            <table className="w-full min-w-[620px] table-fixed text-sm">
               <thead>
                 <tr className="border-b border-[var(--sh-border-soft)]">
-                  <th className="sticky left-0 w-44 min-w-[11rem] text-left p-4 align-bottom font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)] bg-[var(--sh-surface-2)] z-10">
+                  <th className="sticky left-0 w-44 text-left p-4 align-bottom font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)] bg-[var(--sh-surface-2)] z-10">
                     Criterio
                   </th>
                   {items.map(l => (
-                    <th key={l.id} className="p-4 text-left align-bottom min-w-[150px]">
+                    <th key={l.id} className="p-4 text-left align-bottom">
                       <div className="relative w-full rounded-xl overflow-hidden aspect-[4/3] mb-3">
                         <img src={l.image} alt={l.name} className="absolute inset-0 w-full h-full object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -85,7 +85,7 @@ export default function CompareView({ items, onSelect, onBack }: CompareViewProp
                       <p className="text-[11px] text-[var(--sh-muted)] mt-1">{l.agencyName}</p>
                       <button
                         onClick={() => handleSelect(l.id)}
-                        className="mt-2 px-3 py-1.5 rounded-lg text-[11px] font-medium text-[var(--sh-on-primary)] cursor-pointer"
+                        className="mt-2 w-full px-3 py-1.5 rounded-lg text-[11px] font-medium text-[var(--sh-on-primary)] cursor-pointer"
                         style={{ background: 'var(--sh-primary)' }}
                       >
                         VER PROPIEDAD
@@ -99,7 +99,7 @@ export default function CompareView({ items, onSelect, onBack }: CompareViewProp
                   <tr key={row.label} className="border-b border-[var(--sh-border-soft)] last:border-0">
                     <td className="sticky left-0 p-4 font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)] bg-[var(--sh-surface-2)] z-10">{row.label}</td>
                     {items.map(l => (
-                      <td key={l.id} className="p-4 text-[var(--sh-text)] whitespace-nowrap">
+                      <td key={l.id} className="p-4 text-[var(--sh-text)]">
                         {row.cell(l)}
                       </td>
                     ))}

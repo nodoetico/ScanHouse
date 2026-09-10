@@ -126,7 +126,7 @@ export default function PublicCatalog({
           </div>
           <button
             onClick={onExitDemo}
-            className="font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)] hover:text-[var(--sh-text)] transition-colors cursor-pointer"
+            className="px-3.5 py-1.5 rounded-full font-mono text-[10px] uppercase tracking-widest border border-[var(--sh-border-strong)] text-[var(--sh-faint)] hover:text-[var(--sh-text)] hover:border-[var(--sh-primary)] transition-colors cursor-pointer shrink-0"
           >
             ↺ Seleccionar demo
           </button>
