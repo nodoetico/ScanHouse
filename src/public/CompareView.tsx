@@ -72,7 +72,7 @@ export default function CompareView({ items, onSelect, onBack }: CompareViewProp
             <table className="w-full min-w-[560px] text-sm">
               <thead>
                 <tr className="border-b border-[var(--sh-border-soft)]">
-                  <th className="w-44 text-left p-4 align-bottom font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)]">
+                  <th className="sticky left-0 w-44 min-w-[11rem] text-left p-4 align-bottom font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)] bg-[var(--sh-surface-2)] z-10">
                     Criterio
                   </th>
                   {items.map(l => (
@@ -97,7 +97,7 @@ export default function CompareView({ items, onSelect, onBack }: CompareViewProp
               <tbody>
                 {rows.map(row => (
                   <tr key={row.label} className="border-b border-[var(--sh-border-soft)] last:border-0">
-                    <td className="p-4 font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)]">{row.label}</td>
+                    <td className="sticky left-0 p-4 font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)] bg-[var(--sh-surface-2)] z-10">{row.label}</td>
                     {items.map(l => (
                       <td key={l.id} className="p-4 text-[var(--sh-text)] whitespace-nowrap">
                         {row.cell(l)}

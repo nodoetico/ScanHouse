@@ -95,7 +95,7 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
                   onChange={e => setEmail(e.target.value)}
                   placeholder="usuario@inmobiliaria.com"
                   autoComplete="username"
-                  className="w-full px-4 py-3 rounded-xl bg-[var(--sh-surface-2)] border border-[var(--sh-border)] text-[var(--sh-text)] text-sm outline-none focus:border-[var(--sh-border-strong)] transition-colors placeholder:text-[var(--sh-faint)]"
+                  className="w-full px-4 py-3 rounded-xl bg-[var(--sh-surface-2)] border border-[var(--sh-border)] text-[var(--sh-text)] text-base sm:text-sm outline-none focus:border-[var(--sh-border-strong)] transition-colors placeholder:text-[var(--sh-faint)]"
                 />
               </div>
               <div>
@@ -108,7 +108,7 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
                   onChange={e => setPassword(e.target.value)}
                   placeholder="••••••••"
                   autoComplete="current-password"
-                  className="w-full px-4 py-3 rounded-xl bg-[var(--sh-surface-2)] border border-[var(--sh-border)] text-[var(--sh-text)] text-sm outline-none focus:border-[var(--sh-border-strong)] transition-colors placeholder:text-[var(--sh-faint)]"
+                  className="w-full px-4 py-3 rounded-xl bg-[var(--sh-surface-2)] border border-[var(--sh-border)] text-[var(--sh-text)] text-base sm:text-sm outline-none focus:border-[var(--sh-border-strong)] transition-colors placeholder:text-[var(--sh-faint)]"
                 />
               </div>
 

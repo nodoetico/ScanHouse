@@ -163,7 +163,7 @@ export default function PublicCatalog({
 
         <div className="rounded-2xl border border-[var(--sh-border)] bg-[var(--sh-surface-2)] p-3 sm:p-4 mb-8">
           <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-            <div className="flex gap-1.5 overflow-x-auto pb-1 lg:pb-0">
+            <div className="flex gap-1.5 overflow-x-auto scrollbar-hide pb-1 lg:pb-0">
               {(['todas', 'venta', 'alquiler'] as Mode[]).map(m => (
                 <button
                   key={m}
@@ -176,7 +176,7 @@ export default function PublicCatalog({
                 </button>
               ))}
             </div>
-            <div className="flex gap-1.5 overflow-x-auto pb-1 lg:pb-0">
+            <div className="flex gap-1.5 overflow-x-auto scrollbar-hide pb-1 lg:pb-0">
               {types.map(t => (
                 <button
                   key={t}
@@ -189,12 +189,12 @@ export default function PublicCatalog({
                 </button>
               ))}
             </div>
-            <div className="lg:ml-auto flex items-center gap-3">
+            <div className="lg:ml-auto flex flex-wrap items-center gap-3">
               <label className="hidden lg:block font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)]">Hab.</label>
               <select
                 value={rooms}
                 onChange={e => setRooms(e.target.value)}
-                className="bg-[var(--sh-inset)] border border-[var(--sh-border-strong)] text-[var(--sh-text)] rounded-xl px-3 py-2 text-sm cursor-pointer"
+                className="flex-1 min-w-0 lg:flex-none bg-[var(--sh-inset)] border border-[var(--sh-border-strong)] text-[var(--sh-text)] rounded-xl px-3 py-2 text-base lg:text-sm cursor-pointer"
                 aria-label="Habitaciones mínimas"
               >
                 {roomOptions.map(r => (
@@ -204,7 +204,7 @@ export default function PublicCatalog({
               <select
                 value={sort}
                 onChange={e => setSort(e.target.value as Sort)}
-                className="bg-[var(--sh-inset)] border border-[var(--sh-border-strong)] text-[var(--sh-text)] rounded-xl px-3 py-2 text-sm cursor-pointer"
+                className="flex-1 min-w-0 lg:flex-none bg-[var(--sh-inset)] border border-[var(--sh-border-strong)] text-[var(--sh-text)] rounded-xl px-3 py-2 text-base lg:text-sm cursor-pointer"
                 aria-label="Ordenar"
               >
                 <option value="recomendadas">Recomendadas</option>
@@ -216,7 +216,7 @@ export default function PublicCatalog({
                 value={query}
                 onChange={e => setQuery(e.target.value)}
                 placeholder="Buscar..."
-                className="bg-[var(--sh-inset)] border border-[var(--sh-border-strong)] text-[var(--sh-text)] rounded-xl px-3 py-2 text-sm w-32 lg:w-40 placeholder:text-[var(--sh-faint)]"
+                className="w-full lg:w-40 bg-[var(--sh-inset)] border border-[var(--sh-border-strong)] text-[var(--sh-text)] rounded-xl px-3 py-2 text-base lg:text-sm placeholder:text-[var(--sh-faint)]"
               />
             </div>
           </div>

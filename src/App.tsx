@@ -248,7 +248,7 @@ function AppShell() {
             onBackToList={() => setView('catalog')}
             onExitDemo={handleExitDemo}
           />
-          <CompareBar items={compareListings} onRemove={removeCompare} onClear={clearCompare} onOpenCompare={openCompare} />
+          <CompareBar items={compareListings} onRemove={removeCompare} onClear={clearCompare} onOpenCompare={openCompare} elevatedOnMobile />
         </div>
       )}
 

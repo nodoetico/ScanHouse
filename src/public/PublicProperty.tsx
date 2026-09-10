@@ -278,7 +278,7 @@ export default function PublicProperty({
       </main>
 
       <div className="sticky bottom-0 z-30 border-t border-[var(--sh-border)] bg-[var(--sh-header)]/95 backdrop-blur-xl sm:hidden">
-        <div className="grid grid-cols-5">
+        <div className="grid grid-cols-5 pb-[max(0.625rem,env(safe-area-inset-bottom))]">
           <button onClick={onOpen360} className="flex flex-col items-center gap-0.5 py-2.5 text-[var(--sh-text-soft)] cursor-pointer">
             <span className="text-base">◉</span>
             <span className="font-mono text-[9px] uppercase tracking-widest">360°</span>

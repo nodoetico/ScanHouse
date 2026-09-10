@@ -5,13 +5,20 @@ interface CompareBarProps {
   onRemove: (id: string) => void;
   onClear: () => void;
   onOpenCompare: () => void;
+  elevatedOnMobile?: boolean;
 }
 
-export default function CompareBar({ items, onRemove, onClear, onOpenCompare }: CompareBarProps) {
+export default function CompareBar({ items, onRemove, onClear, onOpenCompare, elevatedOnMobile }: CompareBarProps) {
   if (items.length === 0) return null;
 
   return (
-    <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-2xl">
+    <div
+      className={`fixed left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-2xl ${
+        elevatedOnMobile
+          ? 'bottom-[calc(4.75rem+env(safe-area-inset-bottom))] sm:bottom-[max(0.75rem,env(safe-area-inset-bottom))]'
+          : 'bottom-[max(0.75rem,env(safe-area-inset-bottom))]'
+      }`}
+    >
       <div className="flex items-center gap-2 rounded-2xl border border-[var(--sh-border-strong)] bg-[var(--sh-surface-2)]/95 backdrop-blur-xl shadow-xl shadow-black/10 p-2 pl-3">
         <div className="flex items-center gap-2 overflow-x-auto flex-1 min-w-0">
           <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)] shrink-0">

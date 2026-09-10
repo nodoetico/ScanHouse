@@ -23,5 +23,15 @@
     -webkit-font-smoothing: antialiased;
     font-family: var(--font-sans);
     overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  button,
+  a,
+  select,
+  input,
+  textarea {
+    touch-action: manipulation;
   }
 }
