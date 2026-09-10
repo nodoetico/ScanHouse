@@ -162,8 +162,8 @@ export default function PublicCatalog({
         </div>
 
         <div className="rounded-2xl border border-[var(--sh-border)] bg-[var(--sh-surface-2)] p-3 sm:p-4 mb-8">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-            <div className="flex gap-1.5 overflow-x-auto scrollbar-hide pb-1 lg:pb-0">
+          <div className="flex flex-col lg:flex-row lg:flex-wrap lg:items-center gap-3">
+            <div className="flex flex-wrap gap-1.5">
               {(['todas', 'venta', 'alquiler'] as Mode[]).map(m => (
                 <button
                   key={m}
@@ -176,7 +176,7 @@ export default function PublicCatalog({
                 </button>
               ))}
             </div>
-            <div className="flex gap-1.5 overflow-x-auto scrollbar-hide pb-1 lg:pb-0">
+            <div className="flex flex-wrap gap-1.5">
               {types.map(t => (
                 <button
                   key={t}
