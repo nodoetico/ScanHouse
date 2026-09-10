@@ -212,11 +212,11 @@ function AppShell() {
     <div className="fixed inset-0 overflow-hidden">
       {view === 'picker' && <DemoPicker onClient={handleEnterClient} onAgency={handleOpenLogin} />}
 
-      {view === 'login' && <Login onLogin={() => setView('panel')} />}
+      {view === 'login' && <Login onLogin={() => setView('panel')} onBack={() => setView('picker')} />}
 
       {view === 'panel' && agency && <Panel onOpenExperience={handleOpenExperience} onExitDemo={handleExitDemo} />}
 
-      {view === 'panel' && !agency && <Login onLogin={() => setView('panel')} />}
+      {view === 'panel' && !agency && <Login onLogin={() => setView('panel')} onBack={() => setView('picker')} />}
 
       {view === 'catalog' && publicAgency && (
         <div className="absolute inset-0 overflow-y-auto" style={panelTokens(publicAgency.branding)}>

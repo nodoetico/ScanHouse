@@ -13,7 +13,7 @@ const DEFAULT_BRAND: Agency['branding'] = {
   accentColor: '#ffffff',
 };
 
-export default function Login({ onLogin }: { onLogin?: () => void }) {
+export default function Login({ onLogin, onBack }: { onLogin?: () => void; onBack?: () => void }) {
   const { login } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -152,6 +152,15 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
               </div>
             </div>
           </div>
+
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="mt-5 w-full py-2.5 rounded-xl border border-[var(--sh-border)] text-[var(--sh-muted)] font-mono text-[10px] uppercase tracking-widest hover:text-[var(--sh-text)] hover:border-[var(--sh-border-strong)] transition-colors cursor-pointer"
+            >
+              ← Volver a elegir demo
+            </button>
+          )}
 
           <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-widest text-[var(--sh-faint)]">
             Desarrollado por Nodo Ético — Sistemas Inteligentes
