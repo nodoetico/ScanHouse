@@ -31,14 +31,13 @@ export function StatCard({
 }
 
 export function Badge({ children, accent, subtle = true }: { children: ReactNode; accent?: string; subtle?: boolean }) {
+  const style = accent
+    ? { color: accent, borderColor: `${accent}40`, background: subtle ? `${accent}14` : accent }
+    : { color: 'var(--sh-text)', borderColor: 'var(--sh-border-strong)', background: 'var(--sh-inset)' };
   return (
     <span
       className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] uppercase tracking-widest font-mono border"
-      style={{
-        color: accent ?? '#fff',
-        borderColor: `${accent ?? '#fff'}40`,
-        background: subtle ? `${accent ?? '#fff'}14` : (accent ?? '#fff'),
-      }}
+      style={style}
     >
       {children}
     </span>

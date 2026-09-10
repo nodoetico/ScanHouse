@@ -72,15 +72,15 @@ export default function Properties({ onOpenExperience }: { onOpenExperience: (pr
               </div>
 
               <div className="flex flex-wrap gap-2">
-                {p.bedrooms > 0 && <Badge accent="#ffffff">{p.bedrooms} dorm.</Badge>}
-                {p.bathrooms > 0 && <Badge accent="#ffffff">{p.bathrooms} baño{p.bathrooms > 1 ? 's' : ''}</Badge>}
-                {p.coveredArea > 0 && <Badge accent="#ffffff">{p.coveredArea} m²</Badge>}
+                {p.bedrooms > 0 && <Badge>{p.bedrooms} dorm.</Badge>}
+                {p.bathrooms > 0 && <Badge>{p.bathrooms} baño{p.bathrooms > 1 ? 's' : ''}</Badge>}
+                {p.coveredArea > 0 && <Badge>{p.coveredArea} m²</Badge>}
               </div>
 
               <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-[var(--sh-border-soft)]">
                 <button
                   onClick={() => setSelected(selected === p.id ? null : p.id)}
-                  className="px-3 py-1.5 rounded-lg border border-[var(--sh-border)] text-xs text-[var(--sh-text)] hover:bg-[var(--sh-inset)] transition-colors cursor-pointer flex-1 min-w-[100px]"
+                  className="px-3 py-1.5 rounded-lg border border-[var(--sh-border-strong)] text-xs text-[var(--sh-text)] hover:bg-[var(--sh-inset)] transition-colors cursor-pointer flex-1 min-w-[100px]"
                 >
                   {selected === p.id ? 'Ocultar detalle' : 'Ver'}
                 </button>
@@ -91,10 +91,10 @@ export default function Properties({ onOpenExperience }: { onOpenExperience: (pr
                 >
                   Ver experiencia
                 </button>
-                <button className="px-3 py-1.5 rounded-lg border border-[var(--sh-border)] text-xs text-[var(--sh-text)] hover:bg-[var(--sh-inset)] transition-colors cursor-pointer flex-1 min-w-[100px]">
+                <button className="px-3 py-1.5 rounded-lg border border-[var(--sh-border-strong)] text-xs text-[var(--sh-text)] hover:bg-[var(--sh-inset)] transition-colors cursor-pointer flex-1 min-w-[100px]">
                   Analizar
                 </button>
-                <button className="px-3 py-1.5 rounded-lg border border-[var(--sh-border)] text-xs text-[var(--sh-text)] hover:bg-[var(--sh-inset)] transition-colors cursor-pointer flex-1 min-w-[100px]">
+                <button className="px-3 py-1.5 rounded-lg border border-[var(--sh-border-strong)] text-xs text-[var(--sh-text)] hover:bg-[var(--sh-inset)] transition-colors cursor-pointer flex-1 min-w-[100px]">
                   Editar
                 </button>
               </div>
