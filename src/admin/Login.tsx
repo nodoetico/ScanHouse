@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { agencies } from '../data/agencies';
 import { useSession } from '../context/SessionContext';
 
 export default function Login({ onLogin }: { onLogin?: () => void }) {
@@ -12,17 +11,11 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
     e.preventDefault();
     const agency = login(email.trim(), password);
     if (!agency) {
-      setError('Credenciales incorrectas. Probá con una cuenta de demo de abajo.');
+      setError('Credenciales incorrectas.');
       return;
     }
     setError('');
     onLogin?.();
-  };
-
-  const fillAccount = (demoEmail: string, demoPassword: string) => {
-    setEmail(demoEmail);
-    setPassword(demoPassword);
-    setError('');
   };
 
   return (
@@ -97,34 +90,6 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
                 Ingresar
               </button>
             </form>
-
-            <div className="mt-6">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-white/30 mb-3 text-center">
-                Cuentas demo — acá inicia la experiencia privada de cada inmobiliaria
-              </p>
-              <div className="flex flex-col gap-2">
-                {agencies.map(a => (
-                  <button
-                    key={a.id}
-                    onClick={() => fillAccount(a.credentials.email, a.credentials.password)}
-                    className="flex items-center gap-3 p-2.5 rounded-xl border border-white/10 bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.05] transition-all cursor-pointer text-left"
-                  >
-                    <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center bg-white/5">
-                      {a.logo ? (
-                        <img src={a.logo} alt={a.name} className="max-h-full max-w-full object-contain p-0.5" />
-                      ) : (
-                        <span className="font-display text-white/70 text-xs">{a.shortName[0]}</span>
-                      )}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="font-display text-sm text-white truncate">{a.name}</p>
-                      <p className="font-mono text-[10px] text-white/40 truncate">{a.credentials.email}</p>
-                    </div>
-                    <span className="font-mono text-[9px] uppercase tracking-widest text-white/30 shrink-0">Usar</span>
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
 
           <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-widest text-white/30">

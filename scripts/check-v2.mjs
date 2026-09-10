@@ -28,6 +28,7 @@ await delays(1600);
 report(await bodyHas('Panel de gestión'), 'Login único es la pantalla inicial');
 report(await page.evaluate(() => !!document.querySelector('input[type=email]') && !!document.querySelector('input[type=password]')), 'Formulario de credenciales presente');
 report(!(await bodyHas('EXPERIENCIA DEL CLIENTE')), 'No existe selector público de experiencia');
+report(!(await bodyHas('Cuentas demo')), 'Sin botones de credenciales en el login');
 
 await typeLogin('incorrecto@scanhouse.demo', 'x');
 report(await bodyHas('Credenciales incorrectas'), 'Credenciales inválidas rechazadas');

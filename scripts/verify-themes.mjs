@@ -9,18 +9,22 @@ const report = (ok, name, detail = '') => { results.push(ok); console.log(`${ok 
 const errors = [];
 page.on('pageerror', e => errors.push(String(e)));
 
-const agencies = ['Roca', 'Remax', 'Leona', 'Emilia', 'Navarro', 'Agostini'];
+const agencies = [
+  ['Roca', 'roca@scanhouse.demo'],
+  ['Remax', 'remax@scanhouse.demo'],
+  ['Leona', 'leona@scanhouse.demo'],
+  ['Emilia', 'emilia@scanhouse.demo'],
+  ['Navarro', 'navarro@scanhouse.demo'],
+  ['Agostini', 'agostini@scanhouse.demo'],
+];
 
 await page.goto('http://localhost:5199', { waitUntil: 'networkidle2', timeout: 30000 });
 await delays(1600);
 
 const themes = [];
-for (const name of agencies) {
-  await page.evaluate(n => {
-    const b = Array.from(document.querySelectorAll('button')).find(x => (x.textContent || '').includes(n));
-    b?.click();
-  }, name);
-  await delays(350);
+for (const [name, email] of agencies) {
+  await page.type('input[type=email]', email);
+  await page.type('input[type=password]', 'demo123');
   const loginBg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   await page.evaluate(() => Array.from(document.querySelectorAll('button')).find(b => b.textContent.trim() === 'Ingresar')?.click());
   await delays(1100);
